@@ -22,10 +22,10 @@ seed_sn:
 	$(ACTIVATE) && python backend/db/seed_servicenow.py
 
 lint:
-	$(ACTIVATE) && ruff check
+	$(ACTIVATE) && PYTHONPATH=. ruff check
 
 test:
-	$(ACTIVATE) && pytest -q
+	$(ACTIVATE) && PYTHONPATH=. pytest -q
 
 clean:
 	rm -rf $(VENV)

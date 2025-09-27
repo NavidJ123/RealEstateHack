@@ -91,6 +91,11 @@ def export_pdf(property_id: str) -> Response:
     return Response(content=pdf_bytes, media_type="application/pdf", headers=headers)
 
 
+@app.get("/")
+def root() -> JSONResponse:
+    return JSONResponse({"message": "AI Real Estate Broker API", "docs": "/docs"})
+
+
 @app.get("/health")
 def health() -> JSONResponse:
     return JSONResponse({"status": "ok"})

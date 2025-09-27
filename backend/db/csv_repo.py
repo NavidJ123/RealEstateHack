@@ -24,7 +24,12 @@ class CSVRepository:
         if limit is not None:
             df = df.head(limit)
         df = df.where(pd.notnull(df), None)
-        return df.to_dict("records")
+        records = df.to_dict("records")
+        # Convert zipcode to string
+        for record in records:
+            if record.get("zipcode") is not None:
+                record["zipcode"] = str(int(record["zipcode"]))
+        return records
 
     def get_property(self, property_id: str) -> Optional[Dict]:
         df = self._properties
@@ -32,7 +37,11 @@ class CSVRepository:
         if row.empty:
             return None
         record = row.iloc[0].to_dict()
-        return {k: (None if pd.isna(v) else v) for k, v in record.items()}
+        record = {k: (None if pd.isna(v) else v) for k, v in record.items()}
+        # Convert zipcode to string
+        if record.get("zipcode") is not None:
+            record["zipcode"] = str(int(record["zipcode"]))
+        return record
 
     def get_market_stats(self, zipcode: str, start: Optional[date] = None, end: Optional[date] = None) -> List[Dict]:
         df = self._market_stats

@@ -1,26 +1,20 @@
 version: "3.9"
 services:
-  db:
-    image: postgres:14
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: broker
-      POSTGRES_USER: broker
-      POSTGRES_PASSWORD: broker
-    ports:
-      - "5432:5432"
-
   api:
     build: .
     command: uvicorn backend.api:app --host 0.0.0.0 --port 8000
     environment:
-      USE_DB: "true"
-      DATABASE_URL: postgresql://broker:broker@db:5432/broker
-      OPENAI_API_KEY: ${OPENAI_API_KEY-}
+      DB_MODE: ${DB_MODE:-csv}
+      API_BASE_URL: http://api:8000
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      SERVICENOW_INSTANCE: ${SERVICENOW_INSTANCE:-}
+      SERVICENOW_USER: ${SERVICENOW_USER:-}
+      SERVICENOW_PASS: ${SERVICENOW_PASS:-}
+      SERVICENOW_PROPERTIES_TABLE: ${SERVICENOW_PROPERTIES_TABLE:-u_properties}
+      SERVICENOW_MARKET_TABLE: ${SERVICENOW_MARKET_TABLE:-u_market_stats}
+      SERVICENOW_COMPS_TABLE: ${SERVICENOW_COMPS_TABLE:-u_comps}
     ports:
       - "8000:8000"
-    depends_on:
-      - db
 
   app:
     build: .

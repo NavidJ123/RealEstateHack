@@ -15,6 +15,10 @@ from app.components.tables import render_comps_table, render_metrics_table
 
 st.set_page_config(page_title="AI Real Estate Broker (DC)", layout="wide", page_icon="🏙️")
 
+DISCLAIMER_HTML = (
+    "<p class='disclaimer'>Demo using public/synthetic data for Washington, DC. Informational only; not financial advice.</p>"
+)
+
 
 @st.cache_resource(show_spinner=False)
 def get_backend_client() -> BackendClient:
@@ -22,7 +26,7 @@ def get_backend_client() -> BackendClient:
 
 
 def load_styles() -> None:
-    css_path = Path(__file__).resolve().parent / "styles.css"
+    css_path = Path(__file__).resolve().parent / "assets" / "styles.css"
     if css_path.exists():
         st.markdown(f"<style>{css_path.read_text()}</style>", unsafe_allow_html=True)
 
@@ -56,19 +60,15 @@ def render_listing_page() -> None:
 
     backend = get_backend_client()
 
-    search = st.text_input("Search by address or ZIP (20001–20003)", "")
-    zip_filter = None
-    if search.strip().isdigit() and len(search.strip()) == 5:
-        zip_filter = search.strip()
+    zip_query = st.text_input("Filter by ZIP (20001–20003)", "")
+    zip_filter = zip_query.strip() if zip_query.strip().isdigit() and len(zip_query.strip()) == 5 else None
+    if zip_query and not zip_filter:
+        st.info("Enter a 5-digit DC ZIP such as 20001 to filter listings.")
 
     properties = backend.list_properties(zipcode=zip_filter, limit=24)
 
-    if search and not zip_filter:
-        query = search.lower()
-        properties = [p for p in properties if query in p["address"].lower()]
-
     if not properties:
-        st.warning("No properties matched your search. Try a different ZIP or address fragment.")
+        st.warning("No properties available for the selected ZIP.")
         return
 
     summaries = property_summaries(backend, properties)
@@ -84,7 +84,7 @@ def render_listing_page() -> None:
                 key=prop["id"],
             )
 
-    st.markdown("<p class='disclaimer'>This is an MVP using public/demo data for Washington, DC. Estimates and recommendations are informational only and not financial advice.</p>", unsafe_allow_html=True)
+    st.markdown(DISCLAIMER_HTML, unsafe_allow_html=True)
 
 
 def render_detail_page(property_id: str) -> None:
@@ -144,7 +144,7 @@ def render_detail_page(property_id: str) -> None:
 
     render_chat(property_id, analysis, backend)
 
-    st.markdown("<p class='disclaimer'>This is an MVP using public/demo data for Washington, DC. Estimates and recommendations are informational only and not financial advice.</p>", unsafe_allow_html=True)
+    st.markdown(DISCLAIMER_HTML, unsafe_allow_html=True)
 
 
 load_styles()

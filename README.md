@@ -1,24 +1,24 @@
 # AI Real Estate Broker (DC)
 
-Production-ready MVP that pairs DC property search with automated analytics, forecasting, and an investor-focused AI briefing. Streamlit powers the UI, FastAPI exposes the analysis services, and the backend leans on pandas/statistical packages for feature engineering.
+Investor-focused MVP for Washington, DC that blends Streamlit UI, FastAPI analytics, ServiceNow data integration, and OpenAI explanations. Listings, forecasts, comps, and PDF reports run fully offline from CSV or pull live records from ServiceNow when available.
 
-## Highlights
-- **DC-focused listings** – 30 synthetic properties across 20001, 20002, and 20003 with investor-ready metadata.
-- **Dual data access** – Uses Postgres/Supabase when `USE_DB=true`; otherwise operates fully offline from CSV seed files.
-- **Feature engineering** – Appreciation, cap rate, rent growth, and market strength normalization feed a 0–100 Buy/Hold/Sell score.
-- **Forecasts + comps** – Prophet (or ARIMA fallback) generates 36‑month price/rent projections; comps ranked by recency and distance.
-- **AI broker layer** – Structured JSON passed to OpenAI (or deterministic fallback) for summaries and Q&A. No in-flight math.
-- **Investor report PDF** – One-click, single-page PDF with charts, metrics, and recommendation summary.
-- **CI guardrails** – GitHub Actions runs `ruff` linting and `pytest` against the CSV demo data set.
+## What’s Inside
+- **Streamlit front end** – Home grid with ZIP filter, card styling, decision pills, and threaded broker chat on the detail view.
+- **FastAPI backend** – REST endpoints for listings, analysis JSON, broker answers, and PDF exports; CORS enabled for Streamlit.
+- **Dual data modes** – `DB_MODE=csv` reads the bundled demo datasets; `DB_MODE=servicenow` pulls from the ServiceNow Table API with caching and type coercion.
+- **Analytics toolkit** – pandas feature engineering, min-max normalization, scoring sigmoid, Prophet forecasts (ARIMA/naive fallback), and ranked comps.
+- **Broker layer** – OpenAI chat (fallback template if no key) that cites metrics, highlights risks, and never recomputes numbers.
+- **Investor PDF** – ReportLab-generated single page with charts, metrics, and the disclaimer required for demos.
+- **Quality guardrails** – Ruff linting, pytest suite (scoring monotonicity + API schema), GitHub Actions workflow, and Docker/Compose support.
 
-## Repository Layout
+## Project Layout
 ```
 ai-broker-dc/
-├── app/                # Streamlit UI + components
-├── backend/            # FastAPI app, analytics services, data access
-├── data/               # CSV demo datasets (properties, market stats, comps)
-├── tests/              # Pytest suite (scoring, analysis, API)
-├── assets/             # Placeholders for screenshots / marketing collateral
+├── app/                      # Streamlit app, components, assets
+├── backend/                  # FastAPI app, services, ServiceNow client, analytics
+├── data/                     # Synthetic DC datasets for CSV mode
+├── tests/                    # Pytest suite
+├── .github/workflows/ci.yml  # Lint + test pipeline
 ├── Dockerfile
 ├── docker-compose.yml
 ├── Makefile
@@ -27,83 +27,83 @@ ai-broker-dc/
 └── DEMO.md
 ```
 
-## Quick Start
-1. **Bootstrap the environment**
+## Quick Start (CSV mode)
+1. **Bootstrap**
    ```bash
    make venv
-   cp .env.example .env  # update values as needed
+   cp .env.example .env  # adjust values as needed
+   ```
+2. **Run backend**
+   ```bash
+   make api  # http://localhost:8000
+   ```
+3. **Run Streamlit UI**
+   ```bash
+   make app  # http://localhost:8501
+   ```
+4. **Full stack in one terminal**
+   ```bash
+   make all
    ```
 
-2. **Run locally (CSV mode)**
-   ```bash
-   make api   # Terminal 1 – FastAPI at http://localhost:8000
-   make app   # Terminal 2 – Streamlit at http://localhost:8501
-   ```
+Default configuration uses `DB_MODE=csv`, so the app runs end-to-end offline with the bundled demo data.
 
-3. **(Optional) Seed Postgres/Supabase**
-   ```bash
-   export USE_DB=true  # and set DATABASE_URL in .env
-   make seed
+## ServiceNow Mode
+1. Populate `.env` with ServiceNow credentials:
+   ```env
+   DB_MODE=servicenow
+   SERVICENOW_INSTANCE=https://your-instance.service-now.com
+   SERVICENOW_USER=...
+   SERVICENOW_PASS=...
+   SERVICENOW_PROPERTIES_TABLE=u_properties
+   SERVICENOW_MARKET_TABLE=u_market_stats
+   SERVICENOW_COMPS_TABLE=u_comps
    ```
-
-4. **Combined runner**
+2. Seed tables with the demo CSVs (optional, requires insert permissions):
    ```bash
-   make all  # starts API + Streamlit together with automatic teardown
+   make seed_sn
    ```
+3. Restart the API (`make api`). The repository automatically routes through the ServiceNow Table API, with best-effort pagination, coercion, and in-process caching.
 
 ## Docker & Compose
 ```
 docker-compose up --build
 ```
-- `db`: Postgres 14 with demo credentials (`broker`/`broker`).
-- `api`: FastAPI service (mapped to `localhost:8000`).
-- `app`: Streamlit UI (mapped to `localhost:8501`).
+- `api` – FastAPI service (port 8000, respects `DB_MODE` and ServiceNow env vars).
+- `app` – Streamlit UI (port 8501).
+
+Set ServiceNow variables or an OpenAI key via `docker-compose` environment overrides or an `.env` file.
 
 ## Testing & Linting
 ```
 make lint
 make test
 ```
-Tests rely on the CSV data and do not require a running database. The test broker responses use the deterministic fallback path when `OPENAI_API_KEY` is absent.
+Tests cover scoring monotonicity/clamping, analysis JSON integrity, and REST responses. CI (`.github/workflows/ci.yml`) runs the same commands on pushes/PRs with `DB_MODE=csv`.
 
 ## Data & Assumptions
-- **Synthetic datasets** live in `data/`. Each file ships with realistic but fictional DC stats enabling offline demos.
-- **Forecasting fallback** uses ARIMA or a naive trend if Prophet/pmdarima are unavailable, keeping the API resilient inside CI.
-- **LLM usage** is limited to summarization/Q&A. If `OPENAI_API_KEY` is not provided, a templated response covers acceptance criteria.
-- **Assumptions** – No property taxes or renovation budgets; metro proximity and permit data are out of scope for the MVP.
+- `data/properties.csv`, `market_stats.csv`, and `comps.csv` contain 30 properties across ZIPs 20001–20003 with 60 months of market data and realistic comps.
+- Synthetic data approximates DC trends for demo purposes only. Replace with authenticated feeds before production release.
+- ServiceNow table names default to `u_properties`, `u_market_stats`, and `u_comps`; override via env if your instance differs.
+- Metro proximity, tax impacts, and renovation budgets are excluded for this MVP (documented in the "Assumptions" section below).
 
-## Key Services
-- `analysis_service.py` – Feature engineering, scoring, and consolidation of comps/forecasts.
-- `forecast_service.py` – Prophet with ARIMA/naive fallbacks and 36‑month horizon caching.
-- `broker_llm.py` – Prompt orchestration with JSON context block.
-- `pdf_service.py` – ReportLab-based single page investor brief.
+## Key Services & Modules
+- `backend/db/repo.py` – Selects CSV vs. ServiceNow repository via `DB_MODE`.
+- `backend/services/analysis_service.py` – Computes appreciation, cap rate, rent growth, market strength, score, decision, and assembles the response schema.
+- `backend/services/forecast_service.py` – Prophet forecasts with ARIMA/naive fallbacks, cached per ZIP.
+- `backend/services/broker_llm.py` – OpenAI prompt orchestration with deterministic fallback copy.
+- `backend/services/pdf_service.py` – ReportLab PDF generator with structured layout and disclaimer.
+- `app/main.py` – Streamlit navigation, ZIP filter, charts, chat rail, PDF export, and shared styling.
 
-## Supabase / Postgres
-- Schema lives in `backend/db/schema.sql`.
-- Seeder (`backend/db/seed.py`) loads CSVs via psycopg, using upsert semantics for idempotency.
-- Toggle DB mode with `USE_DB=true` and set `DATABASE_URL`. When absent, the repo defaults to CSV reads.
+## DEMO Script
+See `DEMO.md` for a concise walkthrough (ZIP filter → property detail `P20001-01` → broker Q&A → PDF export). Screenshots can be stored in `app/assets/screenshots/` for judging collateral.
 
-## Streamlit UX Notes
-- Home grid renders >12 cards with score & decision badges across the three ZIP codes.
-- Detail page features price/rent charts, metrics table, ranked comps, chat, and PDF export.
-- Footer displays the required disclaimer on every page.
+## Assumptions & Notes
+- Recommendations ignore financing structures, taxes, and renovation budgets; broker responses highlight such risks when relevant.
+- Prophet/pmdarima may be heavy to install; the app gracefully falls back to ARIMA or naive projections if optional deps are missing.
+- OpenAI integration is opt-in. Without `OPENAI_API_KEY`, broker replies use a scripted template that still meets the acceptance criteria.
+- ServiceNow calls use HTTPS Basic Auth with short timeouts; add retries/backoff as needed for production hardening.
 
-## LLM Safety and Ops
-- All outbound calls strip calculations from prompts; JSON is passed verbatim.
-- No secrets are logged, and `.env.example` documents required values.
-- Broker fallback ensures consistent copy for demos when API keys are missing.
-
-## Screenshots & Demo Assets
-Place PNG screenshots in `assets/` using the following naming convention (referenced in DEMO.md):
-- `assets/home.png`
-- `assets/detail.png`
-- `assets/report.png`
-
-## Assumptions
-- Recommendations exclude financing, tax, or renovation considerations.
-- CSV datasets emulate DC trends but are synthetic; deploy with verified data before production use.
-- Streamlit and FastAPI run on the same host in local/demo environments.
-
-## License
-Licensed for demo purposes only. Replace data and API keys before production deployment.
+## Disclaimer
+The UI and PDF display: *“Demo using public/synthetic data for Washington, DC. Informational only; not financial advice.”*
 

@@ -11,13 +11,13 @@ from fastapi.responses import JSONResponse, Response
 
 from .db.repo import get_repository
 from .models.analysis import (
-    Analysis,
+    AnalysisResponse,
     AnalyzeRequest,
     BrokerRequest,
     BrokerResponse,
     ExportResponse,
 )
-from .models.property import PropertyListResponse
+from .models.property import PropertyCard, PropertyListResponse
 from .services.analysis_service import AnalysisService
 from .services.broker_llm import BrokerLLM
 from .services.comps_service import CompsService
@@ -49,27 +49,28 @@ async def _startup() -> None:
 
 
 @app.get("/api/properties", response_model=PropertyListResponse)
-def list_properties(zip: Optional[str] = Query(None, min_length=5, max_length=5), limit: int = Query(20, ge=1, le=50)) -> PropertyListResponse:
-    all_properties = _repository.list_properties(zipcode=zip, limit=None)
-    items = all_properties[:limit]
-    return PropertyListResponse(items=items, total=len(all_properties))
+def list_properties(zip: Optional[str] = Query(None, min_length=5, max_length=5), limit: int = Query(24, ge=1, le=60)) -> PropertyListResponse:
+    records = _repository.list_properties(zipcode=zip, limit=limit)
+    total = len(_repository.list_properties(zipcode=zip, limit=None))
+    items = [PropertyCard(**record) for record in records]
+    return PropertyListResponse(items=items, total=total)
 
 
-@app.get("/api/properties/{property_id}", response_model=Analysis)
-def get_property_analysis(property_id: str) -> Analysis:
+@app.get("/api/properties/{property_id}", response_model=AnalysisResponse)
+def get_property_analysis(property_id: str) -> AnalysisResponse:
     try:
         return _analysis_service.analyze_property(property_id)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
-@app.post("/api/analyze", response_model=Analysis)
-def analyze(body: AnalyzeRequest = Body(...)) -> Analysis:
+@app.post("/api/analyze", response_model=AnalysisResponse)
+def analyze(body: AnalyzeRequest = Body(...)) -> AnalysisResponse:
     property_id = body.id
     if not property_id and body.address:
-        match = next((p for p in _repository.list_properties(limit=None) if p.address.lower() == body.address.lower()), None)
+        match = next((p for p in _repository.list_properties(limit=None) if str(p.get("address", "")).lower() == body.address.lower()), None)
         if match:
-            property_id = match.id
+            property_id = match.get("id")
     if not property_id:
         raise HTTPException(status_code=400, detail="Must provide property id or address")
     return get_property_analysis(property_id)

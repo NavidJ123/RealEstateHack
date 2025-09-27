@@ -1,4 +1,4 @@
-"""Pydantic models representing property domain objects."""
+"""Pydantic models representing property listings."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 
-class Property(BaseModel):
+class PropertyCard(BaseModel):
     id: str
     address: str
     zipcode: str = Field(..., min_length=5, max_length=5)
@@ -18,30 +18,11 @@ class Property(BaseModel):
     current_est_value: Optional[float]
     est_monthly_rent: Optional[float]
     image_url: Optional[str]
-
-
-class MarketStat(BaseModel):
-    zipcode: str
-    date: str
-    median_price: float
-    median_rent: float
-    inventory: Optional[float]
-    dom: Optional[float]
-    income: Optional[float]
-    vacancy_rate: Optional[float]
-
-
-class Comp(BaseModel):
-    comp_id: str
-    property_id: str
-    address: str
-    sale_price: float
-    sale_date: str
-    sqft: Optional[int]
-    distance_mi: Optional[float]
+    score: Optional[int] = None
+    decision: Optional[str] = None
 
 
 class PropertyListResponse(BaseModel):
-    items: List[Property]
+    items: List[PropertyCard]
     total: int
 

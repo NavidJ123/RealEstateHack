@@ -9,7 +9,7 @@ from typing import Dict, List, Optional
 import requests
 
 from backend.db.repo import get_repository
-from backend.models.analysis import Analysis
+from backend.models.analysis import AnalysisResponse
 from backend.services.analysis_service import AnalysisService
 from backend.services.broker_llm import BrokerLLM
 from backend.services.comps_service import CompsService
@@ -46,8 +46,8 @@ class BackendClient:
             resp = self.session.get(f"{self.base_url}/api/properties", params=params, timeout=10)
             resp.raise_for_status()
             return resp.json()["items"]
-        properties = self.repository.list_properties(zipcode=zipcode, limit=None)
-        return [prop.dict() for prop in properties][:limit]
+        properties = self.repository.list_properties(zipcode=zipcode, limit=limit)
+        return [dict(prop) for prop in properties]
 
     def get_analysis(self, property_id: str) -> Dict:
         if self.use_api:
@@ -71,7 +71,7 @@ class BackendClient:
             messages = resp.json()["messages"]
             return messages[-1]["content"]
         cache = self._analysis_cache.get(property_id)
-        model: Analysis
+        model: AnalysisResponse
         if cache and "model" in cache:
             model = cache["model"]  # type: ignore[assignment]
         else:
@@ -86,7 +86,7 @@ class BackendClient:
             resp.raise_for_status()
             return resp.content
         cache = self._analysis_cache.get(property_id)
-        model: Analysis
+        model: AnalysisResponse
         if cache and "model" in cache:
             model = cache["model"]  # type: ignore[assignment]
         else:

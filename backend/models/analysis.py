@@ -7,7 +7,6 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field, validator
 
-from .property import Comp
 
 
 class AnalysisMetrics(BaseModel):
@@ -20,26 +19,36 @@ class AnalysisMetrics(BaseModel):
     zip_vacancy_rate: Optional[float] = None
 
 
-class ZipTrendPoint(BaseModel):
+class TrendPoint(BaseModel):
     date: str
     value: float
-    lower: float | None = None
-    upper: float | None = None
+    lower: Optional[float] = None
+    upper: Optional[float] = None
 
 
 class ZipTrends(BaseModel):
-    price_history: List[ZipTrendPoint]
-    rent_history: List[ZipTrendPoint]
-    price_forecast: List[ZipTrendPoint]
-    rent_forecast: List[ZipTrendPoint]
+    price_history: List[TrendPoint]
+    rent_history: List[TrendPoint]
+    price_forecast: List[TrendPoint]
+    rent_forecast: List[TrendPoint]
 
 
 class Provenance(BaseModel):
-    market_stats: Optional[str]
+    sources: List[str] = Field(default_factory=list)
     generated_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
 
 
-class Analysis(BaseModel):
+class Comp(BaseModel):
+    comp_id: str
+    property_id: str
+    address: str
+    sale_price: float
+    sale_date: str
+    sqft: Optional[int]
+    distance_mi: Optional[float]
+
+
+class AnalysisResponse(BaseModel):
     property_id: str
     address: str
     zip: str
@@ -70,7 +79,7 @@ class AnalyzeRequest(BaseModel):
 
 
 class BrokerRequest(BaseModel):
-    analysis_json: Analysis
+    analysis_json: AnalysisResponse
     question: Optional[str]
 
 

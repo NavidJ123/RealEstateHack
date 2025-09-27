@@ -2,7 +2,7 @@ PYTHON ?= python3
 VENV ?= .venv
 ACTIVATE = . $(VENV)/bin/activate
 
-.PHONY: venv api app all seed test lint clean
+.PHONY: venv api app all seed_sn test lint clean
 
 venv:
 	$(PYTHON) -m venv $(VENV)
@@ -18,14 +18,14 @@ app:
 all:
 	$(ACTIVATE) && bash -c "trap 'kill 0' EXIT; uvicorn backend.api:app --reload --port 8000 & streamlit run app/main.py --server.port=8501"
 
-seed:
-	$(ACTIVATE) && python backend/db/seed.py
+seed_sn:
+	$(ACTIVATE) && python backend/db/seed_servicenow.py
 
 lint:
 	$(ACTIVATE) && ruff check
 
 test:
-	$(ACTIVATE) && pytest
+	$(ACTIVATE) && pytest -q
 
 clean:
 	rm -rf $(VENV)

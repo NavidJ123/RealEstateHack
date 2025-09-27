@@ -40,14 +40,16 @@ class ForecastService:
 
     @memoize("forecast")
     def get_zip_forecast(self, zipcode: str) -> Dict[str, ForecastResult]:
-        df = self.repository.get_market_stats(zipcode)
+        records = self.repository.get_market_stats(zipcode)
+        df = pd.DataFrame(records)
         if df.empty:
             return {
                 "median_price": ForecastResult(history=[], forecast=[]),
                 "median_rent": ForecastResult(history=[], forecast=[]),
             }
         df = df.copy()
-        df["date"] = pd.to_datetime(df["date"])
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        df = df.dropna(subset=["date"])
         df = df.sort_values("date")
         forecasts = {}
         for metric in ["median_price", "median_rent"]:

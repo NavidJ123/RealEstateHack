@@ -6,7 +6,7 @@ import json
 import os
 from typing import Optional
 
-from ..models.analysis import Analysis, BrokerMessage
+from ..models.analysis import AnalysisResponse, BrokerMessage
 from ..utils.logging import get_logger
 
 LOGGER = get_logger("services.broker_llm")
@@ -28,11 +28,11 @@ class BrokerLLM:
                 LOGGER.warning("Failed to init OpenAI client: %s", exc)
                 self._client = None
 
-    def build_context(self, analysis: Analysis) -> str:
+    def build_context(self, analysis: AnalysisResponse) -> str:
         payload = analysis.dict()
         return json.dumps(payload, indent=2)
 
-    def invoke(self, analysis: Analysis, question: Optional[str] = None) -> list[BrokerMessage]:
+    def invoke(self, analysis: AnalysisResponse, question: Optional[str] = None) -> list[BrokerMessage]:
         context_json = self.build_context(analysis)
         assistant_context = f"```json\n{context_json}\n```"
         if not self._client:
@@ -57,7 +57,7 @@ class BrokerLLM:
             LOGGER.warning("LLM call failed: %s", exc)
             return [self._fallback_message(analysis, question)]
 
-    def _fallback_message(self, analysis: Analysis, question: Optional[str]) -> BrokerMessage:
+    def _fallback_message(self, analysis: AnalysisResponse, question: Optional[str]) -> BrokerMessage:
         metrics = analysis.metrics
         drivers = [
             f"Appreciation 5y: {metrics.appreciation_5y:.1%}" if metrics.appreciation_5y is not None else None,

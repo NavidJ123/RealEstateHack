@@ -10,11 +10,15 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 
-from ..models.analysis import Analysis, ZipTrendPoint
+from ..models.analysis import AnalysisResponse, TrendPoint
+
+DISCLAIMER = (
+    "Demo using public/synthetic data for Washington, DC. Informational only; not financial advice."
+)
 
 
 class PDFService:
-    def render(self, analysis: Analysis) -> bytes:
+    def render(self, analysis: AnalysisResponse) -> bytes:
         buffer = io.BytesIO()
         c = canvas.Canvas(buffer, pagesize=letter)
         width, height = letter
@@ -27,27 +31,31 @@ class PDFService:
 
         c.setFont("Helvetica-Oblique", 8)
         c.setFillColor(colors.grey)
-        c.drawString(
-            margin,
-            margin / 2,
-            "This is an MVP using public/demo data for Washington, DC. Estimates and recommendations are informational only and not financial advice.",
-        )
+        c.drawString(margin, margin / 2, DISCLAIMER)
 
         c.showPage()
         c.save()
         buffer.seek(0)
         return buffer.read()
 
-    def _draw_header(self, c: canvas.Canvas, analysis: Analysis, width: float, height: float, margin: float) -> None:
+    def _draw_header(
+        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
+    ) -> None:
         c.setFillColor(colors.HexColor("#0A2342"))
         c.rect(margin, height - margin - 60, width - 2 * margin, 60, fill=1, stroke=0)
         c.setFillColor(colors.white)
         c.setFont("Helvetica-Bold", 18)
         c.drawString(margin + 12, height - margin - 24, analysis.address)
         c.setFont("Helvetica", 12)
-        c.drawString(margin + 12, height - margin - 44, f"Decision: {analysis.decision}  |  Score: {analysis.score}")
+        c.drawString(
+            margin + 12,
+            height - margin - 44,
+            f"Decision: {analysis.decision}  |  Score: {analysis.score}",
+        )
 
-    def _draw_metrics(self, c: canvas.Canvas, analysis: Analysis, width: float, height: float, margin: float) -> None:
+    def _draw_metrics(
+        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
+    ) -> None:
         top = height - margin - 100
         c.setFillColor(colors.black)
         c.setFont("Helvetica-Bold", 12)
@@ -56,10 +64,27 @@ class PDFService:
         metrics = analysis.metrics
         rows = [
             ("Current Value", f"${metrics.current_est_value:,.0f}"),
-            ("Appreciation (5y)", f"{metrics.appreciation_5y:.1%}" if metrics.appreciation_5y is not None else "Insufficient data"),
+            (
+                "Appreciation (5y)",
+                f"{metrics.appreciation_5y:.1%}" if metrics.appreciation_5y is not None else "Insufficient data",
+            ),
             ("Cap Rate", f"{metrics.cap_rate_est:.1%}" if metrics.cap_rate_est is not None else "Insufficient data"),
-            ("Rent Growth (3y)", f"{metrics.rent_growth_3y:.1%}" if metrics.rent_growth_3y is not None else "Insufficient data"),
-            ("Market Strength", f"{metrics.market_strength:+.2f}" if metrics.market_strength is not None else "Insufficient data"),
+            (
+                "Rent Growth (3y)",
+                f"{metrics.rent_growth_3y:.1%}" if metrics.rent_growth_3y is not None else "Insufficient data",
+            ),
+            (
+                "Market Strength",
+                f"{metrics.market_strength:+.2f}" if metrics.market_strength is not None else "Insufficient data",
+            ),
+            (
+                "Median Income",
+                f"${metrics.zip_income:,.0f}" if metrics.zip_income is not None else "Insufficient data",
+            ),
+            (
+                "Vacancy Rate",
+                f"{metrics.zip_vacancy_rate:.1%}" if metrics.zip_vacancy_rate is not None else "Insufficient data",
+            ),
         ]
         y = top - 18
         for label, value in rows:
@@ -67,20 +92,40 @@ class PDFService:
             c.drawRightString(width - margin, y, value)
             y -= 16
 
-    def _draw_charts(self, c: canvas.Canvas, analysis: Analysis, width: float, height: float, margin: float) -> None:
+    def _draw_charts(
+        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
+    ) -> None:
         chart_width = (width - 3 * margin) / 2
         chart_height = 2.2 * inch
         bottom = height / 2 - chart_height / 2
         left = margin
-        self._line_chart(c, analysis.zip_trends.price_history, analysis.zip_trends.price_forecast, left, bottom, chart_width, chart_height, "Median Price ($)")
+        self._line_chart(
+            c,
+            analysis.zip_trends.price_history,
+            analysis.zip_trends.price_forecast,
+            left,
+            bottom,
+            chart_width,
+            chart_height,
+            "Median Price ($)",
+        )
         right = left + chart_width + margin
-        self._line_chart(c, analysis.zip_trends.rent_history, analysis.zip_trends.rent_forecast, right, bottom, chart_width, chart_height, "Median Rent ($)")
+        self._line_chart(
+            c,
+            analysis.zip_trends.rent_history,
+            analysis.zip_trends.rent_forecast,
+            right,
+            bottom,
+            chart_width,
+            chart_height,
+            "Median Rent ($)",
+        )
 
     def _line_chart(
         self,
         c: canvas.Canvas,
-        history: List[ZipTrendPoint],
-        forecast: List[ZipTrendPoint],
+        history: List[TrendPoint],
+        forecast: List[TrendPoint],
         x: float,
         y: float,
         width: float,
@@ -100,7 +145,8 @@ class PDFService:
         min_val, max_val = min(values), max(values)
         if min_val == max_val:
             max_val = min_val + 1
-        def scale(point: ZipTrendPoint, idx: int, total: int) -> tuple[float, float]:
+
+        def scale(point: TrendPoint, idx: int, total: int) -> tuple[float, float]:
             px = x + 12 + (idx / max(total - 1, 1)) * (width - 24)
             norm = (point.value - min_val) / (max_val - min_val)
             py = y + 12 + norm * (height - 24)
@@ -123,7 +169,9 @@ class PDFService:
                 x2, y2 = scale(forecast_points[j], idx1, len(history_points) + len(forecast_points))
                 c.line(x1, y1, x2, y2)
 
-    def _draw_summary(self, c: canvas.Canvas, analysis: Analysis, width: float, height: float, margin: float) -> None:
+    def _draw_summary(
+        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
+    ) -> None:
         top = height / 2 - 36
         c.setFont("Helvetica-Bold", 12)
         c.drawString(margin, top, "Broker Summary")

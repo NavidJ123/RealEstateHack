@@ -1,130 +1,188 @@
-"""Scoring helpers for Buy/Hold/Sell decisions.
-
-This module turns raw numeric metrics about a property into a single
-score from 0 to 100 and then a simple decision label.
-
-High-level steps:
-1. Normalize each metric into a 0-1 range using historical distributions.
-2. Combine the normalized metrics with domain weights to form a weighted
-   average in [0,1].
-3. Stretch and pass the result through a sigmoid to compress extremes and
-   produce a final 0-100 score.
-4. Map the numeric score to Buy/Hold/Sell labels with simple thresholds.
-
-The helper functions `bounded_min_max` and `sigmoid_z` are imported from
-`..utils.normalize` and handle the normalization math and sigmoid mapping.
-"""
-
+# backend/services/scoring.py
 from __future__ import annotations
-
-from dataclasses import dataclass
-from typing import Dict, Iterable, Optional
-
-from ..utils.normalize import bounded_min_max, sigmoid_z
-
-
-# These weights control how important each metric is to the final score.
-# They should sum to 1.0 (or close) so the weighted average stays in [0,1].
-SCORING_WEIGHTS = {
-    "appreciation_5y": 0.40,  # how much the area appreciated over 5 years
-    "cap_rate_est": 0.30,     # estimated capitalization rate (income-based)
-    "rent_growth_3y": 0.20,   # recent rent growth
-    "market_strength": 0.10,  # qualitative/aggregate market signal
-}
+from dataclasses import dataclass, asdict
+from typing import Dict, List, Optional, Tuple
+import numpy as np
 
 
 @dataclass
-class MetricDistributions:
-    """Container for historical distributions used to normalize metrics.
+class Factor:
+    name: str
+    weight: float
+    value: float
+    contrib: float  # contribution to final 0..100 score (approx)
 
-    Each attribute should be an iterable (e.g., list) of past values for that
-    metric. We use these to map a current value into a 0-1 range relative to
-    historical min/max (via `bounded_min_max`).
+def score_property(metrics: Dict[str, float], norms: Dict) -> Dict:
     """
+    Compute 0..100 score + decision + factor attributions.
 
-    appreciation_5y: Iterable[float]
-    cap_rate_est: Iterable[float]
-    rent_growth_3y: Iterable[float]
-    market_strength: Iterable[float]
+    inputs (metrics):
+      cap_rate_market_now       : float (e.g., 0.059 for 5.9%)
+      rent_growth_proj_12m      : float (e.g., 0.041 for 4.1%)
+      income_median_now         : float (e.g., 95000)
+      income_growth_3y          : float (e.g., 0.028 for 2.8%)
+      vacancy_rate_now          : float (e.g., 0.045 for 4.5%)
+      dom_now                   : float or None (# days; optional)
+      rent_to_income            : float or None (annual rent / income; optional, lower is better)
 
+    inputs (norms): precomputed distribution params, e.g.:
+      {
+        "cap_minmax":   (cap_lo, cap_hi, clip_lo, clip_hi),
+        "rentg_minmax": (rg_lo, rg_hi, clip_lo, clip_hi),
+        "msi_minmax":   (msi_lo, msi_hi, None, None),
+        "aff_minmax":   (aff_lo, aff_hi, None, None),
 
-def normalize_metric(name: str, value: Optional[float], distributions: MetricDistributions) -> float:
-    """Turn a raw metric value into a normalized score in [0,1].
+        "income_median_z": (mean, std),
+        "income_growth_z": (mean, std),
+        "vacancy_z":       (mean, std),
+        "dom_z":           (mean, std),
 
-    - name: the key matching an attribute on `distributions` (e.g. 'cap_rate_est').
-    - value: the current metric value to normalize. If value is missing (None)
-      we return 0.5 which represents a neutral/default score.
-    - distributions: historical values used to compute a relative position.
+        "raw_z": (mean, std)
+      }
 
-    The actual mapping is performed by `bounded_min_max(value, values)` which
-    returns where `value` falls between the observed min and max in `values`.
-    If the value is lower than the historical min it will be clamped to 0.0,
-    and if higher than the max it is clamped to 1.0.
+    returns:
+      {
+        "score": int 0..100,
+        "decision": "Buy"|"Hold"|"Sell",
+        "msi": float,
+        "factors": [ {name, weight, value, contrib}, ... ]
+      }
     """
+    # --- Build MSI (income↑ + income_growth↑ − vacancy↓ − dom↓)
+    dom = metrics.get("dom_now", None)
+    dom_z = _z(dom, *norms["dom_z"]) if isinstance(dom, (float, int)) else 0.0
 
-    # If there's no data for this property, return the neutral midpoint.
-    if value is None:
+    msi = (
+        _z(metrics["income_median_now"], *norms["income_median_z"])
+        + _z(metrics["income_growth_3y"], *norms["income_growth_z"])
+        - _z(metrics["vacancy_rate_now"], *norms["vacancy_z"])
+        - dom_z
+    )
+
+    # --- Normalize contributors (robust min–max to 0..1)
+    cap_norm   = _robust_minmax(metrics["cap_rate_market_now"], *norms["cap_minmax"])
+    rentg_norm = _robust_minmax(metrics["rent_growth_proj_12m"], *norms["rentg_minmax"])
+    msi_norm   = _robust_minmax(msi, *norms["msi_minmax"])
+
+    # Affordability: higher is better when defined as (1 - rent_to_income)
+    aff_value = 1.0 - float(metrics.get("rent_to_income", 0.30))
+    aff_norm  = _robust_minmax(aff_value, *norms["aff_minmax"])
+
+    # --- Weights (business-driven)
+    W_CAP, W_RENTG, W_MSI, W_AFF = 0.35, 0.35, 0.20, 0.10
+
+    raw = (W_CAP*cap_norm + W_RENTG*rentg_norm + W_MSI*msi_norm + W_AFF*aff_norm)
+
+    # Map to 0..100 via sigmoid of z-scored raw (makes distribution nice)
+    score = int(round(100 * _sigmoid(_z(raw, *norms["raw_z"]))))
+
+    decision = "Buy" if score >= 75 else "Hold" if score >= 55 else "Sell"
+
+    factors: List[Factor] = [
+        Factor("Market Cap Rate",              W_CAP,  metrics["cap_rate_market_now"],     W_CAP*cap_norm*100),
+        Factor("Projected Rent Growth (12m)",  W_RENTG,metrics["rent_growth_proj_12m"],    W_RENTG*rentg_norm*100),
+        Factor("Market Strength Index (MSI)",  W_MSI,  msi,                                 W_MSI*msi_norm*100),
+        Factor("Affordability (1 - Rent/Inc)", W_AFF,  aff_value,                           W_AFF*aff_norm*100),
+    ]
+
+    return {
+        "score": _clamp_int(score, 0, 100),
+        "decision": decision,
+        "msi": float(msi),
+        "factors": [asdict(f) for f in factors],
+    }
+
+
+# -----------------------
+# Norms helpers (optional)
+# -----------------------
+
+def build_norms_from_dataset(
+    series_dict: Dict[str, np.ndarray],
+    robust_percentiles: Tuple[float, float] = (5.0, 95.0)
+) -> Dict:
+    """
+    Build normalization params once from arrays across your dataset.
+
+    series_dict expects arrays (across zip/months), e.g.:
+      {
+        "cap": np.array([...]),
+        "rentg_12m": np.array([...]),
+        "income_median": np.array([...]),
+        "income_growth_3y": np.array([...]),
+        "vacancy": np.array([...]),
+        "dom": np.array([...]),
+        "aff": np.array([...])  # 1 - rent_to_income
+      }
+    """
+    p_lo, p_hi = robust_percentiles
+
+    cap_lo, cap_hi = _pct_clip(series_dict["cap"], p_lo, p_hi)
+    rg_lo,  rg_hi  = _pct_clip(series_dict["rentg_12m"], p_lo, p_hi)
+
+    # MSI min/max over a reasonable z-span (or compute from a first pass)
+    msi_lo, msi_hi = -3.0, 3.0
+
+    aff_lo, aff_hi = _pct_clip(series_dict["aff"], p_lo, p_hi)
+
+    # z-score params
+    income_mean, income_std = _mean_std(series_dict["income_median"])
+    incg_mean,   incg_std   = _mean_std(series_dict["income_growth_3y"])
+    vac_mean,    vac_std    = _mean_std(series_dict["vacancy"])
+    dom_mean,    dom_std    = _mean_std(series_dict["dom"])
+
+    # final raw composite z baseline (center around ~0.5 with modest spread)
+    raw_mean, raw_std = 0.5, 0.12
+
+    return {
+        "cap_minmax":   (cap_lo, cap_hi, cap_lo, cap_hi),
+        "rentg_minmax": (rg_lo,  rg_hi,  rg_lo,  rg_hi),
+        "msi_minmax":   (msi_lo, msi_hi, None,   None),
+        "aff_minmax":   (aff_lo, aff_hi, None,   None),
+
+        "income_median_z": (income_mean, max(income_std, 1e-9)),
+        "income_growth_z": (incg_mean,   max(incg_std,   1e-9)),
+        "vacancy_z":       (vac_mean,    max(vac_std,    1e-9)),
+        "dom_z":           (dom_mean,    max(dom_std,    1e-9)),
+
+        "raw_z": (raw_mean, raw_std),
+    }
+
+
+# -----------------------
+# Internal math helpers
+# -----------------------
+
+def _robust_minmax(x: float, lo: float, hi: float,
+                   clip_lo: Optional[float]=None,
+                   clip_hi: Optional[float]=None) -> float:
+    """Min–max normalize with optional clipping; returns 0..1 even if lo==hi."""
+    if clip_lo is not None and x < clip_lo:
+        x = clip_lo
+    if clip_hi is not None and x > clip_hi:
+        x = clip_hi
+    if hi == lo:
         return 0.5
+    return (x - lo) / (hi - lo)
 
-    # Get the historical values for this metric (using the attribute name).
-    values = getattr(distributions, name)
+def _z(x: Optional[float], mean: float, std: float) -> float:
+    if x is None:
+        return 0.0
+    if std == 0:
+        return 0.0
+    return (x - mean) / std
 
-    # Map to [0,1] relative to historical min/max and return.
-    return bounded_min_max(value, values)
+def _sigmoid(z: float) -> float:
+    return 1.0 / (1.0 + np.exp(-z))
 
+def _pct_clip(arr: np.ndarray, lo_pct: float, hi_pct: float) -> Tuple[float, float]:
+    arr = np.asarray(arr, dtype=float)
+    return (float(np.nanpercentile(arr, lo_pct)),
+            float(np.nanpercentile(arr, hi_pct)))
 
-def score_from_metrics(metrics: Dict[str, Optional[float]], distributions: MetricDistributions) -> int:
-    """Compute a 0-100 integer score from raw metrics.
+def _mean_std(arr: np.ndarray) -> Tuple[float, float]:
+    arr = np.asarray(arr, dtype=float)
+    return float(np.nanmean(arr)), float(np.nanstd(arr))
 
-    Steps:
-    1. For each metric, normalize it to [0,1]. Missing metrics become 0.5.
-    2. Multiply each normalized value by its weight and sum to get a weighted
-       average `total` in [0,1].
-    3. Convert the weighted average into a z-like value (center at 0 -> good/bad
-       around 0) by subtracting 0.5 and scaling. This gives more room to the
-       sigmoid to compress extreme values.
-    4. Apply `sigmoid_z` to squash the value into (0,1), multiply by 100, round,
-       and clamp to [0,100].
-
-    Returns an integer score between 0 and 100.
-    """
-
-    # Weighted sum of normalized metrics (starts at 0.0)
-    total = 0.0
-
-    # Normalize each metric and accumulate weighted contribution
-    for name, weight in SCORING_WEIGHTS.items():
-        normalized = normalize_metric(name, metrics.get(name), distributions)
-        total += weight * normalized
-
-    # `total` is a weighted average in [0,1]. We re-center around 0 and scale
-    # so the subsequent sigmoid has a meaningful slope. The factor 5 is an
-    # empirical choice that controls how steep the transition is.
-    score_raw_like_z = (total - 0.5) * 5
-
-    # `sigmoid_z` maps real numbers to a (0,1) range and compresses extremes.
-    score = sigmoid_z(score_raw_like_z) * 100
-
-    # Ensure the final value is a rounded integer and clamped to [0,100].
-    score = max(0, min(100, round(score)))
-    return int(score)
-
-
-def decision_from_score(score: int) -> str:
-    """Turn a numeric score into a simple decision label.
-
-    Thresholds:
-    - 75 and above: "Buy"  (strong positive signal)
-    - 55 to 74:     "Hold" (neutral/moderate)
-    - below 55:     "Sell" (negative signal)
-
-    These thresholds are simple heuristics and can be tuned later.
-    """
-
-    if score >= 75:
-        return "Buy"
-    if score >= 55:
-        return "Hold"
-    return "Sell"
-
-
+def _clamp_int(v: int, lo: int, hi: int) -> int:
+    return max(lo, min(hi, v))

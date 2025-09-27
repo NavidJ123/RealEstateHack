@@ -1,0 +1,107 @@
+body {
+    background-color: #f5f7fb;
+    font-family: "Inter", sans-serif;
+}
+
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.property-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    min-height: 220px;
+}
+
+.property-card h3 {
+    font-size: 1.1rem;
+    margin: 0.5rem 0 0.4rem 0;
+}
+
+.property-card__meta {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+.property-card__value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.property-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.decision-pill {
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.decision-buy {
+    background: rgba(34, 197, 94, 0.15);
+    color: #15803d;
+}
+
+.decision-hold {
+    background: rgba(251, 191, 36, 0.15);
+    color: #b45309;
+}
+
+.decision-sell {
+    background: rgba(248, 113, 113, 0.15);
+    color: #b91c1c;
+}
+
+.score-badge {
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.score-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.score-warning {
+    background: linear-gradient(135deg, #facc15, #f97316);
+}
+
+.score-danger {
+    background: linear-gradient(135deg, #f87171, #ef4444);
+}
+
+.disclaimer {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.stButton button {
+    border-radius: 999px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.4rem 1.4rem;
+    border: none;
+}
+
+.stButton button:hover {
+    background: #1d4ed8;
+}
+

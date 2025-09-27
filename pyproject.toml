@@ -1,0 +1,9 @@
+[tool.ruff]
+line-length = 100
+ignore = ["E203", "E501"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra"
+testpaths = ["tests"]
+

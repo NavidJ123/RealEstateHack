@@ -1,22 +1,22 @@
 # AI Real Estate Broker (DC)
 
-Investor-focused MVP for Washington, DC that blends Streamlit UI, FastAPI analytics, ServiceNow data integration, and OpenAI explanations. Listings, forecasts, comps, and PDF reports run fully offline from CSV or pull live records from ServiceNow when available.
+Investor-focused MVP for Washington, DC that pairs Streamlit, FastAPI, and dual data sources (CSV or ServiceNow) with Gemini-led scoring. The backend computes market analytics, the Gemini model produces the final Buy/Hold/Sell decision and rationale, and the UI highlights factor attributions, chat, and a CoStar-style PDF report.
 
 ## What’s Inside
-- **Streamlit front end** – Home grid with ZIP filter, card styling, decision pills, and threaded broker chat on the detail view.
-- **FastAPI backend** – REST endpoints for listings, analysis JSON, broker answers, and PDF exports; CORS enabled for Streamlit.
-- **Dual data modes** – `DB_MODE=csv` reads the bundled demo datasets; `DB_MODE=servicenow` pulls from the ServiceNow Table API with caching and type coercion.
-- **Analytics toolkit** – pandas feature engineering, min-max normalization, scoring sigmoid, Prophet forecasts (ARIMA/naive fallback), and ranked comps.
-- **Broker layer** – OpenAI chat (fallback template if no key) that cites metrics, highlights risks, and never recomputes numbers.
-- **Investor PDF** – ReportLab-generated single page with charts, metrics, and the disclaimer required for demos.
-- **Quality guardrails** – Ruff linting, pytest suite (scoring monotonicity + API schema), GitHub Actions workflow, and Docker/Compose support.
+- **Streamlit front end** – Home grid with ZIP filter, decision badges (fallback based on deterministic score), detail page with right-rail chat + popup modal, score explanation bars, and PDF export.
+- **FastAPI backend** – REST endpoints for listings, per-property analysis payloads, `/api/score` (Gemini final decision), `/api/broker` chat, and PDF export; includes `/api/health` for status checks.
+- **AI-first scoring** – Python computes market cap rate, projected rent growth, MSI components, and affordability. Gemini (via `google-generativeai`) receives the structured payload + factor attributions and returns score/decision/rationale/top contributors. A deterministic fallback mirrors the rubric when Gemini is unavailable.
+- **Analytics toolkit** – pandas feature engineering, Prophet/ARIMA rent forecasts, market strength index (income/vacancy/DOM), affordability ratios, and ranked comps.
+- **Dual data modes** – `DB_MODE=csv` runs from bundled synthetic datasets; `DB_MODE=servicenow` pulls the same schema via the ServiceNow Table API with numeric coercion and optional seeding script.
+- **CoStar-style PDF** – ReportLab one-pager with executive summary (LLM text), key metrics, rent/price charts, comps snapshot, factor breakdown, and risks/provenance banner.
+- **Quality guardrails** – Ruff linting, pytest suite (scoring monotonicity + API schema), GitHub Actions workflow, Docker/Compose support, and `.env` templates.
 
 ## Project Layout
 ```
 ai-broker-dc/
 ├── app/                      # Streamlit app, components, assets
-├── backend/                  # FastAPI app, services, ServiceNow client, analytics
-├── data/                     # Synthetic DC datasets for CSV mode
+├── backend/                  # FastAPI app, analytics services, Gemini client, data access
+├── data/                     # Synthetic DC datasets (CSV mode)
 ├── tests/                    # Pytest suite
 ├── .github/workflows/ci.yml  # Lint + test pipeline
 ├── Dockerfile
@@ -28,82 +28,77 @@ ai-broker-dc/
 ```
 
 ## Quick Start (CSV mode)
-1. **Bootstrap**
-   ```bash
-   make venv
-   cp .env.example .env  # adjust values as needed
-   ```
-2. **Run backend**
-   ```bash
-   make api  # http://localhost:8000
-   ```
-3. **Run Streamlit UI**
-   ```bash
-   make app  # http://localhost:8501
-   ```
-4. **Full stack in one terminal**
-   ```bash
-   make all
-   ```
+```bash
+make venv
+cp .env.example .env  # set GOOGLE_API_KEY if you want live Gemini scoring
+make api               # http://localhost:8000
+make app               # http://localhost:8501
+```
+`make all` launches API + Streamlit together (press Ctrl+C to stop both).
 
-Default configuration uses `DB_MODE=csv`, so the app runs end-to-end offline with the bundled demo data.
+Without a Gemini key the system uses deterministic fallback scoring but everything else (analysis, UI, PDF) works.
 
 ## ServiceNow Mode
-1. Populate `.env` with ServiceNow credentials:
-   ```env
-   DB_MODE=servicenow
-   SERVICENOW_INSTANCE=https://your-instance.service-now.com
-   SERVICENOW_USER=...
-   SERVICENOW_PASS=...
-   SERVICENOW_PROPERTIES_TABLE=u_properties
-   SERVICENOW_MARKET_TABLE=u_market_stats
-   SERVICENOW_COMPS_TABLE=u_comps
-   ```
-2. Seed tables with the demo CSVs (optional, requires insert permissions):
-   ```bash
-   make seed_sn
-   ```
-3. Restart the API (`make api`). The repository automatically routes through the ServiceNow Table API, with best-effort pagination, coercion, and in-process caching.
+```env
+DB_MODE=servicenow
+SERVICENOW_INSTANCE=https://your-instance.service-now.com
+SERVICENOW_USER=...
+SERVICENOW_PASS=...
+SERVICENOW_PROPERTIES_TABLE=u_properties
+SERVICENOW_MARKET_TABLE=u_market_stats
+SERVICENOW_COMPS_TABLE=u_comps
+```
+1. `make seed_sn` (optional) posts the bundled CSV data into ServiceNow tables.
+2. Restart `make api`; the repository automatically routes API calls through ServiceNow.
 
 ## Docker & Compose
-```
+```bash
 docker-compose up --build
 ```
-- `api` – FastAPI service (port 8000, respects `DB_MODE` and ServiceNow env vars).
-- `app` – Streamlit UI (port 8501).
+- `api` runs FastAPI (port 8000) honouring `DB_MODE`, Gemini, and ServiceNow env vars.
+- `app` runs Streamlit (port 8501) against `api`.
 
-Set ServiceNow variables or an OpenAI key via `docker-compose` environment overrides or an `.env` file.
+Provide env vars through `.env` or the compose file (e.g., `GOOGLE_API_KEY` for Gemini).
 
 ## Testing & Linting
-```
+```bash
 make lint
 make test
 ```
-Tests cover scoring monotonicity/clamping, analysis JSON integrity, and REST responses. CI (`.github/workflows/ci.yml`) runs the same commands on pushes/PRs with `DB_MODE=csv`.
+Pytests cover deterministic scoring monotonicity and REST contract (`/api/properties/{id}`, `/api/score`). CI (`.github/workflows/ci.yml`) installs dependencies and runs the same steps with `DB_MODE=csv`.
 
-## Data & Assumptions
-- `data/properties.csv`, `market_stats.csv`, and `comps.csv` contain 30 properties across ZIPs 20001–20003 with 60 months of market data and realistic comps.
-- Synthetic data approximates DC trends for demo purposes only. Replace with authenticated feeds before production release.
-- ServiceNow table names default to `u_properties`, `u_market_stats`, and `u_comps`; override via env if your instance differs.
-- Metro proximity, tax impacts, and renovation budgets are excluded for this MVP (documented in the "Assumptions" section below).
+## Data & Analytics Notes
+- `data/market_stats.csv` includes cap rate proxies, median income, vacancy, and DOM per month (60 months across ZIPs 20001–20003). The same schema is expected in ServiceNow (`x_ai_prop_market_stats`).
+- Analytics compute cap rate, 12-month rent growth (Prophet → ARIMA → naive), MSI (income level + growth − vacancy − DOM), affordability (rent to income), and appreciation (display only).
+- Factor attributions normalise each metric across the DC dataset (robust 5–95 percentile) for transparency and fallback scoring.
+- No raw PII or vendor-licensed data is sent to Gemini—only the aggregated analysis JSON.
 
 ## Key Services & Modules
-- `backend/db/repo.py` – Selects CSV vs. ServiceNow repository via `DB_MODE`.
-- `backend/services/analysis_service.py` – Computes appreciation, cap rate, rent growth, market strength, score, decision, and assembles the response schema.
-- `backend/services/forecast_service.py` – Prophet forecasts with ARIMA/naive fallbacks, cached per ZIP.
-- `backend/services/broker_llm.py` – OpenAI prompt orchestration with deterministic fallback copy.
-- `backend/services/pdf_service.py` – ReportLab PDF generator with structured layout and disclaimer.
-- `app/main.py` – Streamlit navigation, ZIP filter, charts, chat rail, PDF export, and shared styling.
+- `backend/services/analysis_service.py` – Builds the analysis payload, metrics, factor attributions, and fallback score.
+- `backend/services/broker_llm.py` – Gemini interface with strict JSON output; deterministic fallback when Gemini is unavailable.
+- `backend/services/forecast_service.py` – Produces rent/price histories and 36‑month forecasts plus projected rent growth (12m).
+- `backend/services/pdf_service.py` – CoStar-style single-page PDF with executive summary, metrics, charts, comps, factors, and provenance.
+- `app/main.py` – Streamlit flows (ZIP listings, score explanation bars, right-rail chat + popup modal, PDF export).
 
-## DEMO Script
-See `DEMO.md` for a concise walkthrough (ZIP filter → property detail `P20001-01` → broker Q&A → PDF export). Screenshots can be stored in `app/assets/screenshots/` for judging collateral.
+## Demo Flow (abridged)
+1. Filter the home grid by ZIP (e.g., 20001) and note fallback decisions on each card.
+2. Open property `P20001-01` (“125 New Jersey Ave NW”).
+3. Detail page auto-calls `/api/score`, updates decision/score, and visualises factor contributions.
+4. Use the right-rail chat or open the popup modal to ask “Should I sell in 2 years?” and “What risks should I watch?”.
+5. Export the CoStar-style PDF to show the executive summary, charts, comps, and factor breakdown.
 
-## Assumptions & Notes
-- Recommendations ignore financing structures, taxes, and renovation budgets; broker responses highlight such risks when relevant.
-- Prophet/pmdarima may be heavy to install; the app gracefully falls back to ARIMA or naive projections if optional deps are missing.
-- OpenAI integration is opt-in. Without `OPENAI_API_KEY`, broker replies use a scripted template that still meets the acceptance criteria.
-- ServiceNow calls use HTTPS Basic Auth with short timeouts; add retries/backoff as needed for production hardening.
+See `DEMO.md` for the full scripted walk-through.
+
+## Assumptions & Limitations
+- Financing costs, tax impacts, permits, and renovation budgets are out of scope for the MVP.
+- Affordability uses rent-to-income from median rent when property rent is missing.
+- Prophet/pmdarima are optional; the app gracefully falls back to ARIMA or naive projections.
+- Gemini output is deterministic with the provided temperature settings, but the fallback path guarantees behaviour if the API key is absent.
 
 ## Disclaimer
-The UI and PDF display: *“Demo using public/synthetic data for Washington, DC. Informational only; not financial advice.”*
+The app and PDF automatically display: *“Demo using public/synthetic data for Washington, DC. Informational only; not financial advice.”*
 
+## Troubleshooting
+- **ServiceNow creds missing**: the API logs a warning and falls back to CSV mode. Ensure `SERVICENOW_INSTANCE`, `SERVICENOW_USER`, `SERVICENOW_PASS`, and the `SN_TABLE_*` variables are set.
+- **Gemini unavailable**: the UI and PDF fall back to deterministic scoring; broker chat responses explain the fallback.
+- **Prophet not installed**: rent forecasts automatically fall back to ARIMA or a naive trend.

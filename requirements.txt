@@ -12,7 +12,7 @@ python-dotenv
 reportlab
 requests
 supabase
-openai
 psycopg[binary]
 ruff
 pytest
+google-generativeai

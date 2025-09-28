@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import io
-from typing import List
+from typing import Dict, List, Optional
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -18,16 +18,19 @@ DISCLAIMER = (
 
 
 class PDFService:
-    def render(self, analysis: AnalysisResponse) -> bytes:
+    def render(self, analysis: AnalysisResponse, scoring: Dict[str, object]) -> bytes:
         buffer = io.BytesIO()
         c = canvas.Canvas(buffer, pagesize=letter)
         width, height = letter
         margin = 0.6 * inch
 
-        self._draw_header(c, analysis, width, height, margin)
-        self._draw_metrics(c, analysis, width, height, margin)
-        self._draw_charts(c, analysis, width, height, margin)
-        self._draw_summary(c, analysis, width, height, margin)
+        header_bottom = self._draw_header(c, analysis, scoring, width, height, margin)
+        summary_bottom = self._draw_executive_summary(c, scoring, width, header_bottom - 20, margin)
+        metrics_bottom = self._draw_metrics(c, analysis, width, summary_bottom - 20, margin)
+        charts_bottom = self._draw_charts(c, analysis, width, metrics_bottom - 30, margin)
+        comps_bottom = self._draw_comps(c, analysis, width, charts_bottom - 20, margin)
+        factors_bottom = self._draw_scoring_factors(c, analysis, width, comps_bottom - 20, margin)
+        self._draw_risks(c, analysis, min(factors_bottom - 20, margin + 160), margin)
 
         c.setFont("Helvetica-Oblique", 8)
         c.setFillColor(colors.grey)
@@ -39,87 +42,117 @@ class PDFService:
         return buffer.read()
 
     def _draw_header(
-        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
-    ) -> None:
+        self,
+        c: canvas.Canvas,
+        analysis: AnalysisResponse,
+        scoring: Dict[str, object],
+        width: float,
+        height: float,
+        margin: float,
+    ) -> float:
+        header_height = 70
+        top = height - margin
         c.setFillColor(colors.HexColor("#0A2342"))
-        c.rect(margin, height - margin - 60, width - 2 * margin, 60, fill=1, stroke=0)
+        c.rect(margin, top - header_height, width - 2 * margin, header_height, fill=1, stroke=0)
         c.setFillColor(colors.white)
-        c.setFont("Helvetica-Bold", 18)
-        c.drawString(margin + 12, height - margin - 24, analysis.address)
+        c.setFont("Helvetica-Bold", 20)
+        c.drawString(margin + 16, top - 26, analysis.address)
         c.setFont("Helvetica", 12)
-        c.drawString(
-            margin + 12,
-            height - margin - 44,
-            f"Decision: {analysis.decision}  |  Score: {analysis.score}",
-        )
+        decision = scoring.get("decision", "Hold")
+        score = scoring.get("score", "–")
+        c.drawString(margin + 16, top - 48, f"Zip {analysis.zip} · Decision: {decision} · Score: {score}")
+        return top - header_height
+
+    def _draw_executive_summary(
+        self,
+        c: canvas.Canvas,
+        scoring: Dict[str, object],
+        width: float,
+        top: float,
+        margin: float,
+    ) -> float:
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(colors.HexColor("#0A2342"))
+        c.drawString(margin, top - 14, "Executive Summary")
+        c.setFont("Helvetica", 10.5)
+        c.setFillColor(colors.black)
+        text = scoring.get("rationale") or "Gemini scoring unavailable; displaying fallback summary."
+        wrapped = self._wrap_text(str(text), width - 2 * margin)
+        y = top - 30
+        for line in wrapped:
+            c.drawString(margin, y, line)
+            y -= 13
+        return y
 
     def _draw_metrics(
-        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
-    ) -> None:
-        top = height - margin - 100
-        c.setFillColor(colors.black)
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(margin, top, "Key Metrics")
-        c.setFont("Helvetica", 11)
+        self,
+        c: canvas.Canvas,
+        analysis: AnalysisResponse,
+        width: float,
+        top: float,
+        margin: float,
+    ) -> float:
         metrics = analysis.metrics
         rows = [
-            ("Current Value", f"${metrics.current_est_value:,.0f}"),
-            (
-                "Appreciation (5y)",
-                f"{metrics.appreciation_5y:.1%}" if metrics.appreciation_5y is not None else "Insufficient data",
-            ),
-            ("Cap Rate", f"{metrics.cap_rate_est:.1%}" if metrics.cap_rate_est is not None else "Insufficient data"),
-            (
-                "Rent Growth (3y)",
-                f"{metrics.rent_growth_3y:.1%}" if metrics.rent_growth_3y is not None else "Insufficient data",
-            ),
-            (
-                "Market Strength",
-                f"{metrics.market_strength:+.2f}" if metrics.market_strength is not None else "Insufficient data",
-            ),
-            (
-                "Median Income",
-                f"${metrics.zip_income:,.0f}" if metrics.zip_income is not None else "Insufficient data",
-            ),
-            (
-                "Vacancy Rate",
-                f"{metrics.zip_vacancy_rate:.1%}" if metrics.zip_vacancy_rate is not None else "Insufficient data",
-            ),
+            ("Current Value", self._fmt_currency(metrics.current_est_value)),
+            ("Cap Rate (Market)", self._fmt_percent(metrics.cap_rate_market_now)),
+            ("Projected Rent Growth (12m)", self._fmt_percent(metrics.rent_growth_proj_12m)),
+            ("Median Income", self._fmt_currency(metrics.income_median_now)),
+            ("Income Growth (3y)", self._fmt_percent(metrics.income_growth_3y)),
+            ("Vacancy Rate", self._fmt_percent(metrics.vacancy_rate_now)),
+            ("Days on Market", self._fmt_number(metrics.dom_now)),
+            ("Affordability Index", self._fmt_percent(metrics.affordability_index)),
+            ("Rent-to-Income", self._fmt_percent(metrics.rent_to_income_ratio)),
+            ("Market Strength Index", self._fmt_number(metrics.market_strength_index, precision=2)),
+            ("DSCR (Projected)", self._fmt_number(metrics.dscr_proj, precision=2)),
+            ("Appreciation (5y)", self._fmt_percent(metrics.appreciation_5y)),
         ]
-        y = top - 18
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(colors.HexColor("#0A2342"))
+        c.drawString(margin, top - 14, "Key Metrics")
+        c.setFont("Helvetica", 10.5)
+        c.setFillColor(colors.black)
+        y = top - 30
         for label, value in rows:
             c.drawString(margin, y, label)
             c.drawRightString(width - margin, y, value)
-            y -= 16
+            y -= 12
+        return y
 
     def _draw_charts(
-        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
-    ) -> None:
+        self,
+        c: canvas.Canvas,
+        analysis: AnalysisResponse,
+        width: float,
+        top: float,
+        margin: float,
+    ) -> float:
         chart_width = (width - 3 * margin) / 2
-        chart_height = 2.2 * inch
-        bottom = height / 2 - chart_height / 2
+        chart_height = 1.8 * inch
+        y = top - chart_height
         left = margin
-        self._line_chart(
-            c,
-            analysis.zip_trends.price_history,
-            analysis.zip_trends.price_forecast,
-            left,
-            bottom,
-            chart_width,
-            chart_height,
-            "Median Price ($)",
-        )
-        right = left + chart_width + margin
         self._line_chart(
             c,
             analysis.zip_trends.rent_history,
             analysis.zip_trends.rent_forecast,
-            right,
-            bottom,
+            left,
+            y,
             chart_width,
             chart_height,
-            "Median Rent ($)",
+            "Median Rent History & Forecast",
         )
+        right = left + chart_width + margin
+        self._line_chart(
+            c,
+            analysis.zip_trends.price_history,
+            analysis.zip_trends.price_forecast,
+            right,
+            y,
+            chart_width,
+            chart_height,
+            "Median Price History & Forecast",
+        )
+        return y - 10
 
     def _line_chart(
         self,
@@ -135,53 +168,130 @@ class PDFService:
         if not history:
             return
         c.setStrokeColor(colors.black)
-        c.setLineWidth(1)
         c.rect(x, y, width, height, stroke=1, fill=0)
-        c.setFont("Helvetica-Bold", 11)
-        c.drawString(x + 6, y + height - 16, title)
-
-        all_points = history + forecast
-        values = [pt.value for pt in all_points]
-        min_val, max_val = min(values), max(values)
+        c.setFont("Helvetica-Bold", 10.5)
+        c.drawString(x + 6, y + height - 14, title)
+        series = history + forecast
+        values = [pt.value for pt in series]
+        min_val = min(values)
+        max_val = max(values)
         if min_val == max_val:
             max_val = min_val + 1
+        total_points = len(series)
 
-        def scale(point: TrendPoint, idx: int, total: int) -> tuple[float, float]:
-            px = x + 12 + (idx / max(total - 1, 1)) * (width - 24)
-            norm = (point.value - min_val) / (max_val - min_val)
-            py = y + 12 + norm * (height - 24)
+        def scale(pt: TrendPoint, idx: int) -> tuple[float, float]:
+            px = x + 12 + (idx / max(total_points - 1, 1)) * (width - 24)
+            norm = (pt.value - min_val) / (max_val - min_val)
+            py = y + 18 + norm * (height - 36)
             return px, py
 
-        history_points = list(history)
-        forecast_points = list(forecast)
         c.setStrokeColor(colors.HexColor("#1565C0"))
-        for i in range(1, len(history_points)):
-            x1, y1 = scale(history_points[i - 1], i - 1, len(history_points) + len(forecast_points))
-            x2, y2 = scale(history_points[i], i, len(history_points) + len(forecast_points))
+        for idx in range(1, len(history)):
+            x1, y1 = scale(history[idx - 1], idx - 1)
+            x2, y2 = scale(history[idx], idx)
             c.line(x1, y1, x2, y2)
-        if forecast_points:
+        if forecast:
             c.setStrokeColor(colors.HexColor("#42A5F5"))
-            offset = len(history_points) - 1
-            for j in range(1, len(forecast_points)):
-                idx1 = offset + j
-                idx0 = offset + j - 1
-                x1, y1 = scale(forecast_points[j - 1], idx0, len(history_points) + len(forecast_points))
-                x2, y2 = scale(forecast_points[j], idx1, len(history_points) + len(forecast_points))
+            offset = len(history) - 1
+            for idx in range(1, len(forecast)):
+                x1, y1 = scale(forecast[idx - 1], offset + idx - 1)
+                x2, y2 = scale(forecast[idx], offset + idx)
                 c.line(x1, y1, x2, y2)
 
-    def _draw_summary(
-        self, c: canvas.Canvas, analysis: AnalysisResponse, width: float, height: float, margin: float
-    ) -> None:
-        top = height / 2 - 36
+    def _draw_comps(
+        self,
+        c: canvas.Canvas,
+        analysis: AnalysisResponse,
+        width: float,
+        top: float,
+        margin: float,
+    ) -> float:
+        comps = analysis.comps[:5]
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(margin, top, "Broker Summary")
-        c.setFont("Helvetica", 11)
-        body = (
-            f"{analysis.decision} recommendation with score {analysis.score}. "
-            f"Current estimated value ${analysis.metrics.current_est_value:,.0f}. "
-            "See charts for historic and projected trends."
-        )
-        text_obj = c.beginText(margin, top - 18)
-        text_obj.textLines(body)
-        c.drawText(text_obj)
+        c.setFillColor(colors.HexColor("#0A2342"))
+        c.drawString(margin, top - 14, "Comparable Sales")
+        c.setFont("Helvetica", 10)
+        c.setFillColor(colors.black)
+        y = top - 30
+        if not comps:
+            c.drawString(margin, y, "No comparable sales available.")
+            return y - 10
+        for comp in comps:
+            row = (
+                f"{comp.address} · {comp.sale_date} · {self._fmt_currency(comp.sale_price)} · "
+                f"{self._fmt_number(comp.sqft, suffix=' sqft')}"
+            )
+            c.drawString(margin, y, row)
+            y -= 12
+        return y
 
+    def _draw_scoring_factors(
+        self,
+        c: canvas.Canvas,
+        analysis: AnalysisResponse,
+        width: float,
+        top: float,
+        margin: float,
+    ) -> float:
+        factors = analysis.explanations.factors
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(colors.HexColor("#0A2342"))
+        c.drawString(margin, top - 14, "How We Scored This")
+        c.setFont("Helvetica", 10)
+        c.setFillColor(colors.black)
+        y = top - 30
+        for factor in factors:
+            effect = "+" if factor.contrib >= 0 else "-"
+            label = f"{factor.name}: {effect}{abs(factor.contrib):.1f} pts (weight {factor.weight:.2f})"
+            c.drawString(margin, y, label)
+            y -= 12
+        return y
+
+    def _draw_risks(self, c: canvas.Canvas, analysis: AnalysisResponse, top: float, margin: float) -> None:
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(colors.HexColor("#0A2342"))
+        c.drawString(margin, top - 14, "Risks & Assumptions")
+        c.setFont("Helvetica", 10)
+        c.setFillColor(colors.black)
+        provenance = analysis.provenance
+        risks = [
+            "Market assumptions derived from synthetic datasets; replace with live feeds before production.",
+            f"Data sources: {', '.join(provenance.sources) if provenance.sources else 'CSV demo datasets'}.",
+            "Cap rate proxy uses median rent and price when explicit market data is unavailable.",
+        ]
+        y = top - 30
+        for item in risks:
+            c.drawString(margin, y, f"- {item}")
+            y -= 12
+
+    def _fmt_currency(self, value: Optional[float]) -> str:
+        if value is None:
+            return "—"
+        return f"${value:,.0f}"
+
+    def _fmt_percent(self, value: Optional[float]) -> str:
+        if value is None:
+            return "—"
+        return f"{value:.1%}"
+
+    def _fmt_number(self, value: Optional[float], precision: int = 0, suffix: str = "") -> str:
+        if value is None:
+            return "—"
+        fmt = f"{value:.{precision}f}"
+        return f"{fmt}{suffix}"
+
+    def _wrap_text(self, text: str, width: float, char_width: float = 6.0) -> List[str]:
+        max_chars = max(20, int(width / char_width))
+        words = text.split()
+        lines: List[str] = []
+        current: List[str] = []
+        for word in words:
+            tentative = " ".join(current + [word])
+            if len(tentative) > max_chars and current:
+                lines.append(" ".join(current))
+                current = [word]
+            else:
+                current.append(word)
+        if current:
+            lines.append(" ".join(current))
+        return lines

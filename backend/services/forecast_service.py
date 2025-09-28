@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import pandas as pd
 
@@ -60,6 +60,24 @@ class ForecastService:
             forecast_points = self._build_forecast(df[["date", metric]].rename(columns={metric: "y"}), metric)
             forecasts[metric] = ForecastResult(history=history_points, forecast=forecast_points)
         return forecasts
+
+    def projected_rent_growth(self, zipcode: str, months: int = 12) -> Optional[float]:
+        forecasts = self.get_zip_forecast(zipcode)
+        rent_history = forecasts["median_rent"].history
+        rent_forecast = forecasts["median_rent"].forecast
+        if not rent_history or not rent_forecast:
+            return None
+        latest_value = rent_history[-1]["value"]
+        if latest_value in (None, 0):
+            return None
+        idx = min(months, len(rent_forecast)) - 1
+        target_value = rent_forecast[idx]["value"]
+        if target_value is None:
+            return None
+        try:
+            return float(target_value / latest_value - 1)
+        except ZeroDivisionError:
+            return None
 
     def _build_forecast(self, df: pd.DataFrame, metric: str) -> List[Dict[str, float]]:
         df = df.rename(columns={"date": "ds"})

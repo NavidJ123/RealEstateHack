@@ -34,17 +34,15 @@ def render_property_card(
     decision = summary.get("decision") or "Hold"
     score = summary.get("score")
     current_value = summary.get("current_est_value") or property_data.get("current_est_value") or 0
-    image_url = property_data.get("image_url") or "https://placehold.co/400x240?text=Property"
 
     card_html = f"""
         <div class="property-card">
-            <img src="{image_url}" alt="Property" class="property-card__image" />
             <div class="property-card__header">
                 <span class="{decision_pill(decision)}">{decision}</span>
-                <span class="{score_badge(score)}">{score if score is not None else '—'}</span>
+                <span class="{score_badge(score)}">{score if score is not None else '-'}</span>
             </div>
             <h3>{property_data.get('address')}</h3>
-            <p class="property-card__meta">{property_data.get('zipcode')} · {property_data.get('type') or 'Property'} · {property_data.get('sqft') or '—'} sqft</p>
+            <p class="property-card__meta">{property_data.get('zipcode')} · {property_data.get('type') or 'Property'} · {property_data.get('sqft') or '-'} sqft</p>
             <p class="property-card__value">${float(current_value):,.0f}</p>
         </div>
     """

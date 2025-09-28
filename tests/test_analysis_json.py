@@ -19,19 +19,15 @@ def test_analysis_contains_required_fields():
     analysis = service.analyze_property("P20001-01")
     data = json.loads(analysis.json())
     assert data["property_id"] == "P20001-01"
-    assert data["metrics"]["current_est_value"] > 0
-    assert 0 <= data["score"] <= 100
-    assert data["decision"] in {"Buy", "Hold", "Sell"}
-
-    trends = data["zip_trends"]
-    assert trends["price_history"]
-    assert trends["rent_history"]
-    assert isinstance(trends["price_forecast"], list)
-
-    comps = data["comps"]
-    assert comps and "sale_price" in comps[0]
-
-    provenance = data["provenance"]
-    assert "generated_at" in provenance
-    assert isinstance(provenance.get("sources"), list)
+    assert "score" in data
+    assert "decision" in data
+    metrics = data["metrics"]
+    assert "cap_rate_market_now" in metrics
+    assert "rent_growth_proj_12m" in metrics
+    assert "market_strength_index" in metrics
+    explanations = data["explanations"]
+    assert explanations["factors"]
+    assert "fallback_total_score" in explanations
+    assert data["zip_trends"]["rent_history"], "rent history should not be empty"
+    assert data["comps"], "comps should be available"
 

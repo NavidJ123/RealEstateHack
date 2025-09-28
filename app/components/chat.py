@@ -7,16 +7,20 @@ from typing import Dict
 import streamlit as st
 
 
-def render_chat(property_id: str, analysis: Dict, backend_client) -> None:
+def render_chat(property_id: str, analysis: Dict, backend_client, show_header: bool = True, input_key: str | None = None) -> None:
     state = st.session_state.setdefault("chat_history", {})
     history = state.setdefault(property_id, [])
 
-    st.markdown("### Broker Chat")
+    if input_key is None:
+        input_key = f"chat_input_{property_id}"
+
+    if show_header:
+        st.markdown("### Broker Chat")
     for message in history:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    prompt = st.chat_input("Ask the AI Broker about this property")
+    prompt = st.chat_input("Ask the AI Broker about this property", key=input_key)
     if prompt:
         history.append({"role": "user", "content": prompt})
         with st.chat_message("user"):

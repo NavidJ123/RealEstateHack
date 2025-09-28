@@ -3,20 +3,24 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Literal, Optional
 
-from pydantic import BaseModel, Field, validator
-
+from pydantic import BaseModel, Field
 
 
 class AnalysisMetrics(BaseModel):
-    current_est_value: float
+    current_est_value: Optional[float]
+    cap_rate_market_now: Optional[float]
+    rent_growth_proj_12m: Optional[float]
+    income_median_now: Optional[float]
+    income_growth_3y: Optional[float]
+    vacancy_rate_now: Optional[float]
+    dom_now: Optional[float]
+    affordability_index: Optional[float]
+    rent_to_income_ratio: Optional[float]
+    market_strength_index: Optional[float]
+    dscr_proj: Optional[float]
     appreciation_5y: Optional[float]
-    cap_rate_est: Optional[float]
-    rent_growth_3y: Optional[float]
-    market_strength: Optional[float]
-    zip_income: Optional[float] = None
-    zip_vacancy_rate: Optional[float] = None
 
 
 class TrendPoint(BaseModel):
@@ -48,37 +52,56 @@ class Comp(BaseModel):
     distance_mi: Optional[float]
 
 
+class FactorPayload(BaseModel):
+    name: str
+    key: str
+    weight: float
+    value: Optional[float]
+    norm: Optional[float]
+    contrib: float
+
+
+class Explanations(BaseModel):
+    factors: List[FactorPayload]
+    fallback_total_score: int
+
+
 class AnalysisResponse(BaseModel):
     property_id: str
     address: str
     zip: str
     metrics: AnalysisMetrics
-    score: int
-    decision: str
+    score: Optional[int] = None
+    decision: Optional[str] = None
+    explanations: Explanations
     zip_trends: ZipTrends
     comps: List[Comp]
     provenance: Provenance
-
-    @validator("decision")
-    def validate_decision(cls, value: str) -> str:
-        allowed = {"Buy", "Hold", "Sell"}
-        if value not in allowed:
-            raise ValueError(f"decision must be one of {allowed}")
-        return value
 
 
 class AnalyzeRequest(BaseModel):
     id: Optional[str]
     address: Optional[str]
 
-    @validator("address")
-    def strip_address(cls, value: Optional[str]) -> Optional[str]:
-        if value:
-            return value.strip()
-        return value
+
+class ScoreRequest(BaseModel):
+    analysis_json: AnalysisResponse
+
+
+class Contributor(BaseModel):
+    name: str
+    effect: str
+
+
+class ScoreResponse(BaseModel):
+    score: int
+    decision: str
+    rationale: str
+    top_contributors: List[Contributor]
 
 
 class BrokerRequest(BaseModel):
+    mode: Literal["thesis", "qa"] = "qa"
     analysis_json: AnalysisResponse
     question: Optional[str]
 
@@ -90,6 +113,10 @@ class BrokerMessage(BaseModel):
 
 class BrokerResponse(BaseModel):
     messages: List[BrokerMessage]
+
+
+class BrokerQAResponse(BaseModel):
+    text: str
 
 
 class ExportResponse(BaseModel):

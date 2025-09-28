@@ -104,7 +104,6 @@ class PDFService:
             ("Affordability Index", self._fmt_percent(metrics.affordability_index)),
             ("Rent-to-Income", self._fmt_percent(metrics.rent_to_income_ratio)),
             ("Market Strength Index", self._fmt_number(metrics.market_strength_index, precision=2)),
-            ("DSCR (Projected)", self._fmt_number(metrics.dscr_proj, precision=2)),
             ("Appreciation (5y)", self._fmt_percent(metrics.appreciation_5y)),
         ]
         c.setFont("Helvetica-Bold", 12)

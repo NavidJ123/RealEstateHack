@@ -1,5 +1,16 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Query
 from typing import Optional, Union
+
+try:
+    from dotenv import load_dotenv
+except ImportError:  # pragma: no cover - optional dependency
+    load_dotenv = None
+
+if load_dotenv is not None:
+    from pathlib import Path
+
+    load_dotenv(dotenv_path=Path(__file__).resolve().parents[1] / ".env", override=False)
+
 from .services.analysis_service import analyze_property
 from .db.repo import Repo
 from .services.broker_llm import BrokerLLM

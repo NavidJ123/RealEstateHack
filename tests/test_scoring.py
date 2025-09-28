@@ -11,7 +11,6 @@ def _distributions() -> MetricDistributions:
             "cap_rate_market_now": [0.03, 0.045, 0.06, 0.07],
             "rent_growth_proj_12m": [0.0, 0.015, 0.03, 0.05],
             "market_strength_index": [-1.5, -0.2, 0.4, 1.3],
-            "dscr_proj": [1.0, 1.2, 1.4, 1.7],
         }
     )
 
@@ -22,7 +21,6 @@ def test_cap_rate_monotonicity():
         "cap_rate_market_now": 0.04,
         "rent_growth_proj_12m": 0.02,
         "market_strength_index": 0.1,
-        "dscr_proj": 1.2,
     }
     low = build_factor_attributions(metrics_low, distributions).fallback_total_score
     metrics_high = dict(metrics_low)
@@ -37,7 +35,6 @@ def test_rent_growth_monotonicity():
         "cap_rate_market_now": 0.05,
         "rent_growth_proj_12m": 0.01,
         "market_strength_index": 0.0,
-        "dscr_proj": 1.1,
     }
     slow = build_factor_attributions(base_metrics, distributions).fallback_total_score
     base_metrics["rent_growth_proj_12m"] = 0.045
@@ -51,7 +48,6 @@ def test_market_strength_declines_with_negative_signal():
         "cap_rate_market_now": 0.05,
         "rent_growth_proj_12m": 0.03,
         "market_strength_index": 1.0,
-        "dscr_proj": 1.3,
     }
     strong_score = build_factor_attributions(strong, distributions).fallback_total_score
     weak = dict(strong)
@@ -64,4 +60,3 @@ def test_decision_thresholds():
     assert decision_from_score(80) == "Buy"
     assert decision_from_score(60) == "Hold"
     assert decision_from_score(40) == "Sell"
-

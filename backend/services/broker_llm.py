@@ -21,13 +21,13 @@ SCORE_PROMPT = """You are an AI Real Estate Broker. Use the provided JSON analys
 Do NOT invent numbers. If a metric is missing, state 'insufficient data' in the rationale and use the fallback score provided.
 
 SCORING RULE:
-- Consider Market Cap Rate (weight ~0.35), Projected Rent Growth 12m (~0.35), Market Strength Index (~0.20; built from income level/growth up, vacancy down, DOM down), and Debt Coverage Ratio (~0.10).
+- Consider Market Cap Rate (weight ~0.35), Projected Rent Growth 12m (~0.35), and Market Strength Index (~0.30; built from income level/growth up, vacancy down, DOM down).
 - Score 0-100. Decision: Buy >=75, Hold 55-74, Sell <55.
 
 When you answer, produce a structured thesis in the following format (plain text, no markdown headings):
 "Investment Score: <score>/100 – Decision: <Buy|Hold|Sell>"
 - Bullet paragraph on submarket positioning and competitive standing (reference cap rate, income strength, vacancy).
-- Bullet paragraph on cash-flow outlook (rent growth, NOI indicators, affordability or DSCR cues).
+- Bullet paragraph on cash-flow outlook (rent growth, NOI indicators, affordability cues).
 - Bullet paragraph on forward-looking upside or watch items (vacancy trend, supply pipeline, DOM).
 - Bullet paragraph on a key risk or mitigation focus.
 End with a single line noting if the fallback score was used.
@@ -49,7 +49,7 @@ Use ONLY the provided JSON analysis and scoring summary. Do not fabricate number
 class BrokerLLM:
     def __init__(self, model: Optional[str] = None) -> None:
         self.api_key = os.getenv("GOOGLE_API_KEY")
-        self.model_name = model or os.getenv("LLM_MODEL", "gemini-1.5-flash")
+        self.model_name = model or os.getenv("LLM_MODEL", "gemini-1.5-flash-002")
         self._model = None
         if self.api_key and genai is not None:
             try:
@@ -107,12 +107,11 @@ class BrokerLLM:
         rent_growth = metrics.get("rent_growth_proj_12m")
         msi = metrics.get("market_strength_index")
         vacancy = metrics.get("vacancy_rate_now")
-        dscr = metrics.get("dscr_proj")
         rationale_lines = [
             f"Investment Score: {fallback_score}/100 – Decision: {decision}",
             f"- Market position: cap rate {cap_rate:.2%} and MSI {msi:.2f} signal relative strength." if cap_rate is not None and msi is not None else "- Market position: evaluating cap rate and MSI indicates mixed signals (insufficient data).",
             f"- Cash flow outlook: projected rent growth {rent_growth:.2%} with vacancy {vacancy:.2%}." if rent_growth is not None and vacancy is not None else "- Cash flow outlook: rent growth or vacancy data unavailable; monitor stabilized occupancy.",
-            f"- Debt coverage: projected DSCR {dscr:.2f} using standard leverage assumptions." if dscr is not None else "- Debt coverage: insufficient data; recommend underwriting DSCR separately.",
+            "- Affordability: monitor rent-to-income ratios and expense drift against peers for resilience.",
             "- Forward view: affordability and DOM trends suggest monitoring tenant demand resilience.",
             "- Key risk: rely on fallback score due to incomplete Gemini response." if not self._model else "- Key risk: monitor supply pipeline and expense creep relative to peers.",
             "Fallback score applied due to Gemini unavailability." if not self._model else "Fallback score included for transparency.",

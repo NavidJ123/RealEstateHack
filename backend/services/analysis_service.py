@@ -67,6 +67,7 @@ class AnalysisService:
                     contrib=factor.contribution,
                 )
                 for factor in scoring.factors
+                if factor.key != "dscr_proj"
             ],
             fallback_total_score=scoring.fallback_total_score,
         )
@@ -276,6 +277,26 @@ class AnalysisService:
         if annual_debt_service <= 0:
             return None
         return float(noi / annual_debt_service)
+
+
+_SERVICE_SINGLETON: AnalysisService | None = None
+
+
+def _get_default_service() -> AnalysisService:
+    global _SERVICE_SINGLETON
+    if _SERVICE_SINGLETON is None:
+        repository = Repo()
+        forecast = ForecastService(repository)
+        comps = CompsService(repository)
+        _SERVICE_SINGLETON = AnalysisService(repository, forecast, comps)
+    return _SERVICE_SINGLETON
+
+
+def analyze_property(property_id: str) -> AnalysisResponse:
+    """Module-level helper used by the FastAPI layer."""
+
+    service = _get_default_service()
+    return service.analyze_property(property_id)
 
 
 def _safe_float(value: Optional[float]) -> Optional[float]:

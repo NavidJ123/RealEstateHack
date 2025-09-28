@@ -38,7 +38,6 @@ def render_metrics_table(metrics: dict) -> None:
         {"Metric": "Affordability Index", "Value": _fmt_percent(metrics.get("affordability_index"))},
         {"Metric": "Rent-to-Income", "Value": _fmt_percent(metrics.get("rent_to_income_ratio"))},
         {"Metric": "Market Strength Index", "Value": _fmt_number(metrics.get("market_strength_index"), precision=2)},
-        {"Metric": "DSCR (Projected)", "Value": _fmt_number(metrics.get("dscr_proj"), precision=2)},
         {"Metric": "Appreciation (5y)", "Value": _fmt_percent(metrics.get("appreciation_5y"))},
     ]
     df = pd.DataFrame(data)

@@ -115,11 +115,10 @@ def render_listing_page() -> None:
     st.title("AI Real Estate Broker · Washington, DC")
     backend = get_backend_client()
 
-    submarket_filter = st.text_input("Filter by submarket or ZIP", "").strip()
     max_results = st.slider("Max listings", min_value=10, max_value=200, value=30, step=10)
 
     fetch_limit = 200
-    properties = backend.list_properties(submarket=submarket_filter or None, limit=fetch_limit)
+    properties = backend.list_properties(limit=fetch_limit)
 
     if not properties:
         st.warning("No properties available for the selected filter.")
@@ -137,6 +136,11 @@ def render_listing_page() -> None:
     price_values = [val for prop in properties if (val := safe_float(prop.get("current_est_value"))) is not None]
     sqft_values = [val for prop in properties if (val := safe_float(prop.get("sqft"))) is not None]
     unit_values = [val for prop in properties if (val := safe_float(prop.get("num_units"))) is not None]
+    submarket_values = {
+        str(prop.get("submarket") or prop.get("submarket_name") or "").strip()
+        for prop in properties
+        if prop.get("submarket") or prop.get("submarket_name")
+    }
 
     price_floor = int(min(price_values)) if price_values else 0
     price_ceiling = int(max(price_values)) if price_values else 5_000_000
@@ -153,7 +157,7 @@ def render_listing_page() -> None:
     if unit_floor == unit_ceiling:
         unit_ceiling = unit_floor + 5
 
-    filter_col1, filter_col2 = st.columns(2)
+    filter_col1, filter_col2, filter_col3 = st.columns(3)
     price_min, price_max = filter_col1.slider(
         "Price range ($)",
         min_value=price_floor,
@@ -163,16 +167,18 @@ def render_listing_page() -> None:
     )
     zip_options = sorted({str(prop.get("zipcode") or "").strip() for prop in properties if prop.get("zipcode")})
     selected_zips = filter_col2.multiselect("ZIP code", options=zip_options, default=[])
+    submarket_options = sorted(val for val in submarket_values if val)
+    selected_submarkets = filter_col3.multiselect("Submarket", options=submarket_options, default=[])
 
-    filter_col3, filter_col4 = st.columns(2)
-    sqft_min, sqft_max = filter_col3.slider(
+    filter_col4, filter_col5 = st.columns(2)
+    sqft_min, sqft_max = filter_col4.slider(
         "Square footage",
         min_value=sqft_floor,
         max_value=sqft_ceiling,
         value=(sqft_floor, sqft_ceiling),
         step=50,
     )
-    units_min, units_max = filter_col4.slider(
+    units_min, units_max = filter_col5.slider(
         "Unit count",
         min_value=unit_floor,
         max_value=unit_ceiling,
@@ -189,6 +195,8 @@ def render_listing_page() -> None:
     price_active = price_min > price_floor or price_max < price_ceiling
     sqft_active = sqft_min > sqft_floor or sqft_max < sqft_ceiling
     units_active = units_min > unit_floor or units_max < unit_ceiling
+    submarket_active = bool(selected_submarkets)
+    submarket_selected_normalized = {value.lower() for value in selected_submarkets}
 
     filtered = []
     for prop in properties:
@@ -196,6 +204,7 @@ def render_listing_page() -> None:
         sqft = prop.get("sqft")
         units = prop.get("num_units")
         zipcode = str(prop.get("zipcode") or "").strip()
+        submarket = str(prop.get("submarket") or prop.get("submarket_name") or "").strip()
 
         if price is None:
             if price_active:
@@ -215,6 +224,8 @@ def render_listing_page() -> None:
         elif not within_range(units, units_min, units_max):
             continue
         if selected_zips and zipcode not in selected_zips:
+            continue
+        if submarket_active and submarket.lower() not in submarket_selected_normalized:
             continue
         filtered.append(prop)
 

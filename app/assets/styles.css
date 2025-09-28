@@ -1,6 +1,11 @@
 body {
     background-color: #f5f7fb;
     font-family: "Inter", sans-serif;
+    color: #0f172a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
 }
 
 .property-grid {
@@ -22,6 +27,7 @@ body {
 .property-card h3 {
     font-size: 1.1rem;
     margin: 0.5rem 0 0.4rem 0;
+    color: #0f172a;
 }
 
 .property-card__meta {

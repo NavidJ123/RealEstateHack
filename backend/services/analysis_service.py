@@ -67,6 +67,7 @@ class AnalysisService:
                     contrib=factor.contribution,
                 )
                 for factor in scoring.factors
+                if factor.key != "dscr_proj"
             ],
             fallback_total_score=scoring.fallback_total_score,
         )

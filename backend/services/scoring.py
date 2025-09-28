@@ -57,15 +57,13 @@ class MetricDistributions:
 METRIC_WEIGHTS: Dict[MetricKey, Tuple[str, float]] = {
     "cap_rate_market_now": ("Market Cap Rate", 0.35),
     "rent_growth_proj_12m": ("Projected Rent Growth (12m)", 0.35),
-    "market_strength_index": ("Market Strength Index", 0.20),
-    "dscr_proj": ("Debt Service Coverage Ratio", 0.10),
+    "market_strength_index": ("Market Strength Index", 0.30),
 }
 
 DEFAULT_DISTRIBUTIONS: Dict[MetricKey, Tuple[float, float, float, float]] = {
     "cap_rate_market_now": (0.03, 0.05, 0.07, 0.08),
     "rent_growth_proj_12m": (0.0, 0.02, 0.04, 0.06),
     "market_strength_index": (-1.5, 0.0, 0.8, 1.5),
-    "dscr_proj": (1.0, 1.2, 1.4, 1.8),
 }
 
 

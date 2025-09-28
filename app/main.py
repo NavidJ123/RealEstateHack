@@ -83,7 +83,12 @@ def property_summaries(backend: BackendClient, properties: List[Dict]) -> Dict[s
 
 def render_explain_panel(explanations: Dict, scoring: Dict) -> None:
     with st.expander("Explain score", expanded=True):
-        factors = explanations.get("factors", [])
+        allowed_keys = {"cap_rate_market_now", "rent_growth_proj_12m", "market_strength_index"}
+        factors = [
+            factor
+            for factor in explanations.get("factors", [])
+            if factor.get("key") in allowed_keys and factor.get("contrib") is not None
+        ]
         if not factors:
             st.info("No factor attribution available for this property.")
             return
@@ -168,7 +173,13 @@ def render_detail_page(property_id: str) -> None:
         st.write(thesis.get("rationale", "No rationale available."))
     with chat_col:
         st.markdown("### Broker Chat")
-        render_chat(property_id, analysis, backend, input_key=f"chat_{property_id}_inline")
+        render_chat(
+            property_id,
+            analysis,
+            backend,
+            show_header=False,
+            input_key=f"chat_{property_id}_inline",
+        )
         if st.button("Open Chat Window"):
             st.session_state["chat_modal_open"] = True
 

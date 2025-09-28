@@ -112,11 +112,13 @@ class PDFService:
         c.drawString(margin, top - 14, "Key Metrics")
         c.setFont("Helvetica", 10.5)
         c.setFillColor(colors.black)
+        row_height = 12
         y = top - 30
-        for label, value in rows:
-            c.drawString(margin, y, label)
-            c.drawRightString(width - margin, y, value)
-            y -= 12
+        for idx, (label, value) in enumerate(rows):
+            self._draw_row_stripe(c, idx, margin, width, y, row_height)
+            c.drawString(margin + 6, y, label)
+            c.drawRightString(width - margin - 6, y, value)
+            y -= row_height
         return y
 
     def _draw_charts(
@@ -216,13 +218,15 @@ class PDFService:
         if not comps:
             c.drawString(margin, y, "No comparable sales available.")
             return y - 10
-        for comp in comps:
+        row_height = 12
+        for idx, comp in enumerate(comps):
             row = (
                 f"{comp.address} · {comp.sale_date} · {self._fmt_currency(comp.sale_price)} · "
                 f"{self._fmt_number(comp.sqft, suffix=' sqft')}"
             )
-            c.drawString(margin, y, row)
-            y -= 12
+            self._draw_row_stripe(c, idx, margin, width, y, row_height)
+            c.drawString(margin + 6, y, row)
+            y -= row_height
         return y
 
     def _draw_scoring_factors(
@@ -239,13 +243,36 @@ class PDFService:
         c.drawString(margin, top - 14, "How We Scored This")
         c.setFont("Helvetica", 10)
         c.setFillColor(colors.black)
+        row_height = 12
         y = top - 30
-        for factor in factors:
+        for idx, factor in enumerate(factors):
             effect = "+" if factor.contrib >= 0 else "-"
             label = f"{factor.name}: {effect}{abs(factor.contrib):.1f} pts (weight {factor.weight:.2f})"
-            c.drawString(margin, y, label)
-            y -= 12
+            self._draw_row_stripe(c, idx, margin, width, y, row_height)
+            c.drawString(margin + 6, y, label)
+            y -= row_height
         return y
+
+    def _draw_row_stripe(
+        self,
+        c: canvas.Canvas,
+        row_index: int,
+        margin: float,
+        width: float,
+        baseline: float,
+        row_height: float,
+    ) -> None:
+        """Shade every other row to create alternating horizontal stripes."""
+        if row_index % 2 != 0:
+            return
+        stripe_y = baseline - row_height + 2
+        stripe_width = width - 2 * margin
+        if stripe_width <= 0:
+            return
+        c.saveState()
+        c.setFillColor(colors.HexColor("#F2F4F7"))
+        c.rect(margin, stripe_y, stripe_width, row_height, stroke=0, fill=1)
+        c.restoreState()
 
     def _draw_risks(self, c: canvas.Canvas, analysis: AnalysisResponse, top: float, margin: float) -> None:
         c.setFont("Helvetica-Bold", 12)

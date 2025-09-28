@@ -1,7 +1,18 @@
+# .gitignore
+venv/
 .venv/
+env/
+ENV/
 __pycache__/
-.env
 *.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.idea/
+.vscode/
 .DS_Store
-*.pdf
-.streamlit/
+.env

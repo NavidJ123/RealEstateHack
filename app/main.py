@@ -10,9 +10,17 @@ import sys
 import plotly.graph_objects as go
 import streamlit as st
 
+try:
+    from dotenv import load_dotenv
+except ImportError:  # pragma: no cover - optional dependency
+    load_dotenv = None
+
 ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
+
+if load_dotenv is not None:
+    load_dotenv(dotenv_path=ROOT_DIR / ".env", override=False)
 
 from app.backend_client import BackendClient
 from app.components.cards import render_property_card
@@ -90,7 +98,7 @@ def render_explain_panel(explanations: Dict, scoring: Dict) -> None:
             margin=dict(l=0, r=0, t=10, b=10),
             xaxis_title="Contribution (points)",
         )
-        st.plotly_chart(fig, width="stretch")
+        st.plotly_chart(fig, use_container_width=True)
         if scoring.get("top_contributors"):
             chips = ", ".join(
                 f"{item['name']} ({item['effect']})" for item in scoring["top_contributors"]
@@ -197,9 +205,9 @@ def render_detail_page(property_id: str) -> None:
 
     chart_col1, chart_col2 = st.columns(2)
     with chart_col1:
-        st.plotly_chart(price_chart, width="stretch")
+        st.plotly_chart(price_chart, use_container_width=True)
     with chart_col2:
-        st.plotly_chart(rent_chart, width="stretch")
+        st.plotly_chart(rent_chart, use_container_width=True)
 
     st.subheader("Key Metrics")
     render_metrics_table(metrics)

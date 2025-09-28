@@ -49,7 +49,7 @@ Use ONLY the provided JSON analysis and scoring summary. Do not fabricate number
 class BrokerLLM:
     def __init__(self, model: Optional[str] = None) -> None:
         self.api_key = os.getenv("GOOGLE_API_KEY")
-        self.model_name = model or os.getenv("LLM_MODEL", "gemini-1.5-flash")
+        self.model_name = model or os.getenv("LLM_MODEL", "gemini-1.5-flash-002")
         self._model = None
         if self.api_key and genai is not None:
             try:

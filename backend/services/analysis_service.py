@@ -278,6 +278,26 @@ class AnalysisService:
         return float(noi / annual_debt_service)
 
 
+_SERVICE_SINGLETON: AnalysisService | None = None
+
+
+def _get_default_service() -> AnalysisService:
+    global _SERVICE_SINGLETON
+    if _SERVICE_SINGLETON is None:
+        repository = Repo()
+        forecast = ForecastService(repository)
+        comps = CompsService(repository)
+        _SERVICE_SINGLETON = AnalysisService(repository, forecast, comps)
+    return _SERVICE_SINGLETON
+
+
+def analyze_property(property_id: str) -> AnalysisResponse:
+    """Module-level helper used by the FastAPI layer."""
+
+    service = _get_default_service()
+    return service.analyze_property(property_id)
+
+
 def _safe_float(value: Optional[float]) -> Optional[float]:
     if value is None:
         return None

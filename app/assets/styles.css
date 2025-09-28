@@ -1,11 +1,22 @@
-body {
+.stApp {
+    color: #0f172a;
     background-color: #f5f7fb;
     font-family: "Inter", sans-serif;
-    color: #0f172a;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    color: #0f172a;
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4,
+.stApp h5,
+.stApp h6,
+.property-card h3 {
+    color: #0f172a !important;
+}
+
+.stApp p,
+.stApp li {
+    color: #334155;
 }
 
 .property-grid {

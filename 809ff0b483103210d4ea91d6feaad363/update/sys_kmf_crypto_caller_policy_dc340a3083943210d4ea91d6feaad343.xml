@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_kmf_crypto_caller_policy">
+    <sys_kmf_crypto_caller_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <approval_type/>
+        <check_script_hash>false</check_script_hash>
+        <crypto_module display_value="global.com_snc_platform_security_oauth_glideencrypter">8e4dffa067331010b28becccb585efc1</crypto_module>
+        <crypto_spec display_value="com_snc_platform_security_oauth_glideencrypter --- Symmetric Key Wrapping/Unwrapping">0a4d33e067331010b28becccb585ef96</crypto_spec>
+        <granular_operation/>
+        <identity_group_alias/>
+        <impersonation>false</impersonation>
+        <instance_recipient/>
+        <owner>14da565f1b62f914ba5ceb9b2d4bcbfb</owner>
+        <policy_name>AutoGen-script-6f479c7b7f23121058082cce7c86654d-global.com_snc_platform_security_oauth_glideencrypter</policy_name>
+        <result>track</result>
+        <script_hash>2JCFDgMQCfRRRreO6NIC6Gmd+JtY4v37QomrAzv4BYk=</script_hash>
+        <script_table>sys_script</script_table>
+        <signature_data/>
+        <specify_purpose>false</specify_purpose>
+        <sys_class_name>sys_kmf_crypto_caller_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-09-27 20:49:50</sys_created_on>
+        <sys_id>dc340a3083943210d4ea91d6feaad343</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope>
+        <sys_update_name>sys_kmf_crypto_caller_policy_dc340a3083943210d4ea91d6feaad343</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-09-27 20:49:50</sys_updated_on>
+        <target_role/>
+        <target_scope/>
+        <target_script>6f479c7b7f23121058082cce7c86654d</target_script>
+        <type>1</type>
+        <used>false</used>
+    </sys_kmf_crypto_caller_policy>
+</record_update>

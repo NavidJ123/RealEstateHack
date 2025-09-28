@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="c19f8ebc83943210d4ea91d6feaad34f" sys_domain="global" table="x_1299583_vthack_0_gotham_properties" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad352</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_longitude</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad353</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_net_rentable_area_sqft</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad353</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_assessed_tax_year</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad354</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_zoning_desc</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad354</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_assessed_value_land_usd</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad354</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_census_tract</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad355</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_stabilization_date</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad355</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_last_appraised_value_usd</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad355</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_address_line1</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3b9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_country</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3ba</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_avg_unit_size_sqft</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3ba</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_owner_name</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3ba</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_sys_id</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3bb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_property_name</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3bb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_ingested_at</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3bc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_gas_payer</element>
+            <position>16</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3bc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_parking_stalls</element>
+            <position>17</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3bc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_leed_level</element>
+            <position>18</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3bd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_block_group</element>
+            <position>19</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3bd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_fema_flood_zone</element>
+            <position>20</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3bd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_gross_building_area_sqft</element>
+            <position>21</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3be</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_last_appraised_date</element>
+            <position>22</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3be</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_as_of_date</element>
+            <position>23</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3bf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_mf_product_type</element>
+            <position>24</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3bf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_year_built</element>
+            <position>25</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3bf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_water_payer</element>
+            <position>26</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_state</element>
+            <position>27</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_city</element>
+            <position>28</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_tax_parcel_id</element>
+            <position>29</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_assessed_val_mprovement_usd</element>
+            <position>30</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_electric_payer</element>
+            <position>31</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3c2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>32</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3c2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_source</element>
+            <position>33</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3c2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_delivery_date</element>
+            <position>34</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3c3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_address_line2</element>
+            <position>35</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3c3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_property_external_id</element>
+            <position>36</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3c3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_num_stories</element>
+            <position>37</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3c4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_land_area_acres</element>
+            <position>38</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3c4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_submarket_name</element>
+            <position>39</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3c5</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_property_class</element>
+            <position>40</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3c5</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_zoning_code</element>
+            <position>41</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3c5</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_manager_phone</element>
+            <position>42</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3c6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_notes</element>
+            <position>43</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3c6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_zip</element>
+            <position>44</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3c6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_latitude</element>
+            <position>45</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3c7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_trash_payer</element>
+            <position>46</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3c7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_quality_flag</element>
+            <position>47</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3c8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_status</element>
+            <position>48</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3c8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_num_buildings</element>
+            <position>49</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3c8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_year_renovated</element>
+            <position>50</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3c9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_property_type</element>
+            <position>51</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3c9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_sewer_payer</element>
+            <position>52</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3c9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_elevators</element>
+            <position>53</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3ca</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_website_url</element>
+            <position>54</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3ca</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_num_units</element>
+            <position>55</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3cb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_manager_name</element>
+            <position>56</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3cb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_owner_type</element>
+            <position>57</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>0d9f8ebc83943210d4ea91d6feaad3cb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_geocoding_precision</element>
+            <position>58</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>819f8ebc83943210d4ea91d6feaad3cc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_manager_email</element>
+            <position>59</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>099f8ebc83943210d4ea91d6feaad3cc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_energy_star_score</element>
+            <position>60</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>8d9f8ebc83943210d4ea91d6feaad3cc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_construction_start_date</element>
+            <position>61</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>059f8ebc83943210d4ea91d6feaad3cd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_cbsa_code</element>
+            <position>62</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>899f8ebc83943210d4ea91d6feaad3cd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_parking_ratio_per_unit</element>
+            <position>63</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>019f8ebc83943210d4ea91d6feaad3ce</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>64</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_id>859f8ebc83943210d4ea91d6feaad3ce</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1299583_vthack_0_gotham_properties" sys_domain="global" view="Default view">c19f8ebc83943210d4ea91d6feaad34f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_1299583_vthack_0_gotham_properties</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 21:39:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c19f8ebc83943210d4ea91d6feaad34f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1299583_vthack_0_gotham_properties</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope>
+            <sys_update_name>sys_ui_section_c19f8ebc83943210d4ea91d6feaad34f</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 21:39:35</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

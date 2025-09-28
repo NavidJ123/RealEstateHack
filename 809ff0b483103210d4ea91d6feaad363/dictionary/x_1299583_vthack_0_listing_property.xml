@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="b79a297c83d03210d4ea91d6feaad380" label="Listing property" max_length="40" name="x_1299583_vthack_0_listing_property" type="collection">
+        <element label="Energy Star Score" max_length="40" name="energy_star_score" type="integer"/>
+        <element label="Zoning Code" max_length="40" name="zoning_code" type="string"/>
+        <element label="Submarket Name" max_length="40" name="submarket_name" type="string"/>
+        <element label="Construction Start Date" max_length="40" name="construction_start_date" type="glide_date"/>
+        <element label="Gross Buiding Area" max_length="255" name="gross_buiding_area" type="float"/>
+        <element label="State" max_length="40" name="state" type="string"/>
+        <element label="Num. Buildings" max_length="40" name="num_buildings" type="integer"/>
+        <element label="Census Tract" max_length="40" name="census_tract" type="string"/>
+        <element label="Year Built" max_length="40" name="year_built" type="integer"/>
+        <element label="City" max_length="40" name="city" type="string"/>
+        <element choice="3" label="Trash Payer" max_length="40" name="trash_payer" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Owner" sequence="0" value="owner"/>
+                <element inactive_on_update="false" label="Tenant" sequence="1" value="tenant"/>
+                <element inactive_on_update="false" label="Rubs" sequence="2" value="rubs"/>
+                <element inactive_on_update="false" label="Mixed" sequence="3" value="mixed"/>
+            </choice>
+        </element>
+        <element label="Delivery Date" max_length="40" name="delivery_date" type="glide_date"/>
+        <element choice="3" label="Geocoding Precision" max_length="40" name="geocoding_precision" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Zip centroid" sequence="3" value="zip_centroid"/>
+                <element inactive_on_update="false" label="Rooftop" sequence="0" value="rooftop"/>
+                <element inactive_on_update="false" label="Parcel centroid" sequence="1" value="parcel_centroid"/>
+                <element inactive_on_update="false" label="Street" sequence="2" value="street"/>
+            </choice>
+        </element>
+        <element label="Last Appraised Value (USD)" max_length="38" name="last_appraised_value_usd" type="decimal"/>
+        <element label="Website URL" max_length="40" name="website_url" type="string"/>
+        <element label="Assessed Value Improvement (USD)" max_length="38" name="assessed_value_improvement_usd" type="decimal"/>
+        <element label="Average Unit Size" max_length="255" name="average_unit_size" type="float"/>
+        <element label="Address Line 1" max_length="40" name="address_line_1" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Owner Type" max_length="40" name="owner_type" type="string"/>
+        <element label="Num. Units" max_length="40" name="num_units" type="integer"/>
+        <element choice="3" label="Water Payer" max_length="40" name="water_payer" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Tenant" sequence="1" value="tenant"/>
+                <element inactive_on_update="false" label="Owner" sequence="0" value="owner"/>
+                <element inactive_on_update="false" label="Rubs" sequence="2" value="rubs"/>
+                <element inactive_on_update="false" label="Mixed" sequence="3" value="mixed"/>
+            </choice>
+        </element>
+        <element label="Owner Name" max_length="40" name="owner_name" type="string"/>
+        <element label="Manager Name" max_length="40" name="manager_name" type="string"/>
+        <element choice="3" label="Property Class" max_length="40" name="property_class" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="A" sequence="0" value="a"/>
+                <element inactive_on_update="false" label="B" sequence="1" value="b"/>
+                <element inactive_on_update="false" label="C" sequence="2" value="c"/>
+                <element inactive_on_update="false" label="D" sequence="3" value="d"/>
+            </choice>
+        </element>
+        <element label="Stabilization Date" max_length="40" name="stabilization_date" type="glide_date"/>
+        <element label="FEMA Flood Zone" max_length="40" name="fema_flood_zone" type="string"/>
+        <element label="Land Area (Acres)" max_length="255" name="land_area_acres" type="float"/>
+        <element choice="3" label="Electric Payer" max_length="40" name="electric_payer" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Tenant" sequence="1" value="tenant"/>
+                <element inactive_on_update="false" label="Owner" sequence="0" value="owner"/>
+                <element inactive_on_update="false" label="Rubs" sequence="2" value="rubs"/>
+                <element inactive_on_update="false" label="Mixed" sequence="3" value="mixed"/>
+            </choice>
+        </element>
+        <element label="Num. Stories" max_length="40" name="num_stories" type="integer"/>
+        <element label="Quality Flag" max_length="40" name="quality_flag" type="string"/>
+        <element label="Assessd Tax Year" max_length="40" name="assessd_tax_year" type="integer"/>
+        <element label="Notes" max_length="40" name="notes" type="string_full_utf8"/>
+        <element label="Assessed Value Land (USD)" max_length="38" name="assessed_value_land_usd" type="decimal"/>
+        <element label="Manager Phone" max_length="40" name="manager_phone" type="string"/>
+        <element label="Parking Stalls" max_length="40" name="parking_stalls" type="integer"/>
+        <element label="Block Group" max_length="40" name="block_group" type="string"/>
+        <element choice="3" label="Gas Payer" max_length="40" name="gas_payer" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Owner" sequence="0" value="owner"/>
+                <element inactive_on_update="false" label="Tenant" sequence="1" value="tenant"/>
+                <element inactive_on_update="false" label="Rubs" sequence="2" value="rubs"/>
+                <element inactive_on_update="false" label="Mixed" sequence="3" value="mixed"/>
+            </choice>
+        </element>
+        <element label="CBSA Code" max_length="40" name="cbsa_code" type="string"/>
+        <element label="Property Name" max_length="40" name="property_name" type="string"/>
+        <element label="Address Line 2" max_length="40" name="address_line_2" type="string"/>
+        <element label="Longitude" max_length="40" name="longitude" type="float"/>
+        <element label="Zip" max_length="40" name="zip" type="string"/>
+        <element choice="1" label="Leed Level" max_length="40" name="leed_level" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Platinum" sequence="3" value="platinum"/>
+                <element inactive_on_update="false" label="none" sequence="0" value="none"/>
+                <element inactive_on_update="false" label="Silver" sequence="1" value="silver"/>
+                <element inactive_on_update="false" label="Certified" sequence="0" value="certified"/>
+                <element inactive_on_update="false" label="Gold" sequence="2" value="gold"/>
+            </choice>
+        </element>
+        <element label="Latitude" max_length="40" name="latitude" type="float"/>
+        <element choice="3" label="Status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Demolished" sequence="3" value="demolished"/>
+                <element inactive_on_update="false" label="Under Construction" sequence="1" value="under_construction"/>
+                <element inactive_on_update="false" label="Existing" sequence="0" value="existing"/>
+                <element inactive_on_update="false" label="Planned" sequence="2" value="planned"/>
+            </choice>
+        </element>
+        <element label="As-of Date" max_length="40" name="as_of_date" type="string"/>
+        <element label="Last Appraised Date" max_length="40" name="last_appraised_date" type="glide_date"/>
+        <element label="Tax Parcel ID" max_length="40" name="tax_parcel_id" type="string"/>
+        <element label="Net Rentable Area" max_length="255" name="net_rentable_area" type="float"/>
+        <element label="Manager Email" max_length="40" name="manager_email" type="string"/>
+        <element label="Parking Ratio Per Unit" max_length="40" name="parking_ratio_per_unit" type="float"/>
+        <element label="Elevators" max_length="40" name="elevators" type="integer"/>
+        <element choice="3" label="MF Product Type" max_length="40" name="mf_product_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Mid-rise" sequence="1" value="mid_rise"/>
+                <element inactive_on_update="false" label="Affordable" sequence="5" value="affordable"/>
+                <element inactive_on_update="false" label="Garden" sequence="0" value="garden"/>
+                <element inactive_on_update="false" label="High-rise" sequence="2" value="high_rise"/>
+                <element inactive_on_update="false" label="Student" sequence="3" value="student"/>
+                <element inactive_on_update="false" label="mid-rise" sequence="0" value="mid-rise"/>
+                <element inactive_on_update="false" label="high-rise" sequence="0" value="high-rise"/>
+                <element inactive_on_update="false" label="Senior" sequence="4" value="senior"/>
+            </choice>
+        </element>
+        <element choice="3" label="Property Type" max_length="40" name="property_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Multifamily" sequence="0" value="multifamily"/>
+            </choice>
+        </element>
+        <element label="Zoning Description" max_length="40" name="zoning_description" type="string"/>
+        <element label="Country" max_length="40" name="country" type="string"/>
+        <element label="Property External ID" max_length="40" name="property_external_id" type="string"/>
+        <element choice="3" label="Sewer Payer" max_length="40" name="sewer_payer" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Mixed" sequence="3" value="mixed"/>
+                <element inactive_on_update="false" label="Owner" sequence="0" value="owner"/>
+                <element inactive_on_update="false" label="Tenant" sequence="1" value="tenant"/>
+                <element inactive_on_update="false" label="Rubs" sequence="2" value="rubs"/>
+            </choice>
+        </element>
+        <element label="Year Renovated" max_length="40" name="year_renovated" type="integer"/>
+        <element label="Ingested At" max_length="40" name="ingested_at" type="string"/>
+        <element label="Source" max_length="40" name="source" type="string"/>
+    </element>
+</database>

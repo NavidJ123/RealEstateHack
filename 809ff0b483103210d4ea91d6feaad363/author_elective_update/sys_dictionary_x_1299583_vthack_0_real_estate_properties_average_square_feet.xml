@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_dictionary action="DELETE" element="average_square_feet" table="x_1299583_vthack_0_real_estate_properties">
+        <active>true</active>
+        <array>false</array>
+        <attributes/>
+        <audit>false</audit>
+        <calculation/>
+        <choice>0</choice>
+        <choice_field/>
+        <choice_table/>
+        <column_label>Average Square Feet</column_label>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>average_square_feet</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <internal_type display_value="">float</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>40</max_length>
+        <name>x_1299583_vthack_0_real_estate_properties</name>
+        <next_element/>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_dictionary</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-09-27 16:15:41</sys_created_on>
+        <sys_id>a4758d7c83103210d4ea91d6feaad323</sys_id>
+        <sys_name>Average Square Feet</sys_name>
+        <sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope>
+        <sys_update_name>sys_dictionary_x_1299583_vthack_0_real_estate_properties_average_square_feet</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-09-27 16:17:46</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_dictionary>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</application>
+        <file_path/>
+        <instance_id>14da565f1b62f914ba5ceb9b2d4bcbfb</instance_id>
+        <instance_name>dev220574</instance_name>
+        <name>sys_dictionary_x_1299583_vthack_0_real_estate_properties_average_square_feet</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_dictionary action="INSERT_OR_UPDATE" element="average_square_feet" table="x_1299583_vthack_0_real_estate_properties"><active>true</active><array>false</array><attributes/><audit>false</audit><calculation/><choice>0</choice><choice_field/><choice_table/><column_label>Average Square Feet</column_label><comments/><create_roles/><default_value/><defaultsort/><delete_roles/><dependent/><dependent_on_field/><display>false</display><dynamic_creation>false</dynamic_creation><dynamic_creation_script/><dynamic_default_value/><dynamic_ref_qual/><element>average_square_feet</element><element_reference>false</element_reference><foreign_database/><formula/><function_definition/><function_field>false</function_field><internal_type display_value="">float</internal_type><mandatory>false</mandatory><max_length>40</max_length><name>x_1299583_vthack_0_real_estate_properties</name><next_element/><primary>false</primary><read_only>false</read_only><read_roles/><reference/><reference_cascade_rule/><reference_floats>false</reference_floats><reference_key/><reference_qual/><reference_qual_condition/><reference_type/><spell_check>false</spell_check><staged>false</staged><sys_class_name>sys_dictionary</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-09-27 16:15:41</sys_created_on><sys_id>a4758d7c83103210d4ea91d6feaad323</sys_id><sys_name>Average Square Feet</sys_name><sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package><sys_policy/><sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope><sys_update_name>sys_dictionary_x_1299583_vthack_0_real_estate_properties_average_square_feet</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-09-27 16:17:46</sys_updated_on><table_reference>false</table_reference><text_index>false</text_index><unique>false</unique><use_dependent_field>false</use_dependent_field><use_dynamic_default>false</use_dynamic_default><use_reference_qualifier>simple</use_reference_qualifier><virtual>false</virtual><virtual_type>script</virtual_type><widget/><write_roles/><xml_view>false</xml_view></sys_dictionary></record_update>]]></payload>
+        <payload_hash>104744608</payload_hash>
+        <record_name>Real Estate Properties.Average Square Feet</record_name>
+        <reverted_from/>
+        <source>849ff0b483103210d4ea91d6feaad380</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-09-27 16:17:47</sys_created_on>
+        <sys_id>07e509bc83103210d4ea91d6feaad356</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1998bf758120000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-09-27 16:17:47</sys_updated_on>
+        <type>Dictionary</type>
+        <update_guid>8be509bc92103210b838d38870c02f55</update_guid>
+        <update_guid_history>8be509bc92103210b838d38870c02f55:104744608,68758d7c76103210fc57ea0b299d5642:-852021026,60758d7c87103210403fc4faddfbf03b:1560651035</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-09-27 18:49:13</sys_created_on>
+        <sys_db_object display_value="" name="sys_dictionary">sys_dictionary</sys_db_object>
+        <sys_id>0d6b1ac68bc743509b51743c9eeae900</sys_id>
+        <sys_metadata>a4758d7c83103210d4ea91d6feaad323</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Average Square Feet</sys_name>
+        <sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package>
+        <sys_parent display_value="">3082cd7883103210d4ea91d6feaad33e</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope>
+        <sys_scope_delete display_value="">07d8b09e5a234baf80e20d65b96737e9</sys_scope_delete>
+        <sys_update_name>sys_dictionary_x_1299583_vthack_0_real_estate_properties_average_square_feet</sys_update_name>
+        <sys_update_version display_value="sys_dictionary_x_1299583_vthack_0_real_estate_properties_average_square_feet">07e509bc83103210d4ea91d6feaad356</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-09-27 18:49:13</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

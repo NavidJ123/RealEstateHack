@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="trash_payer" table="x_1299583_vthack_0_listing_property" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>trash_payer</element>
+            <name>x_1299583_vthack_0_listing_property</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 19:29:33</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>trash_payer</sys_name>
+            <sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope>
+            <sys_update_name>sys_choice_x_1299583_vthack_0_listing_property_trash_payer</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 19:29:33</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>trash_payer</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Owner</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_listing_property</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 19:29:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 19:29:33</sys_updated_on>
+            <value>owner</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>trash_payer</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Tenant</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_listing_property</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 19:29:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 19:29:33</sys_updated_on>
+            <value>tenant</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>trash_payer</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Rubs</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_listing_property</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 19:29:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 19:29:33</sys_updated_on>
+            <value>rubs</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>trash_payer</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Mixed</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_listing_property</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-27 19:29:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-27 19:29:33</sys_updated_on>
+            <value>mixed</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

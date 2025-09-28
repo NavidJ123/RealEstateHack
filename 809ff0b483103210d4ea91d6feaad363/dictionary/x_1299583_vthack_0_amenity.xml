@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="d81b33f483dc3210d4ea91d6feaad3a1" label="Amenity" max_length="40" name="x_1299583_vthack_0_amenity" type="collection">
+        <element label="Notes" max_length="40" name="notes" type="string"/>
+        <element label="Count" max_length="40" name="count" type="string"/>
+        <element label="Present" max_length="40" name="present" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Property Sys ID" max_length="40" name="property_sys_id" type="string"/>
+        <element choice="3" label="Amenity Type" max_length="40" name="amenity_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="In Unit WD" sequence="8" value="in_unit_wd"/>
+                <element inactive_on_update="false" label="Bike Room" sequence="12" value="bike_room"/>
+                <element inactive_on_update="false" label="Concierge" sequence="3" value="concierge"/>
+                <element inactive_on_update="false" label="Co Working" sequence="16" value="co_working"/>
+                <element inactive_on_update="false" label="Balcony" sequence="9" value="balcony"/>
+                <element inactive_on_update="false" label="Playground" sequence="13" value="playground"/>
+                <element inactive_on_update="false" label="Package Lockers" sequence="4" value="package_lockers"/>
+                <element inactive_on_update="false" label="Theater" sequence="17" value="theater"/>
+                <element inactive_on_update="false" label="Gym" sequence="1" value="gym"/>
+                <element inactive_on_update="false" label="Courtyard" sequence="14" value="courtyard"/>
+                <element inactive_on_update="false" label="EV Chargers" sequence="5" value="ev_chargers"/>
+                <element inactive_on_update="false" label="Pool" sequence="0" value="pool"/>
+                <element inactive_on_update="false" label="Business Center" sequence="6" value="business_center"/>
+                <element inactive_on_update="false" label="Doorman" sequence="10" value="doorman"/>
+                <element inactive_on_update="false" label="Pets Allowed" sequence="7" value="pets_allowed"/>
+                <element inactive_on_update="false" label="Storage" sequence="11" value="storage"/>
+                <element inactive_on_update="false" label="Roof Deck" sequence="2" value="roof_deck"/>
+                <element inactive_on_update="false" label="Grilling Area" sequence="15" value="grilling_area"/>
+            </choice>
+        </element>
     </element>
 </database>

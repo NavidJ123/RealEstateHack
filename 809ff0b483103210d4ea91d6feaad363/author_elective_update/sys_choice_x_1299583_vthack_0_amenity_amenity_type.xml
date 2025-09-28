@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="amenity_type" table="x_1299583_vthack_0_amenity" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>amenity_type</element>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>amenity_type</sys_name>
+            <sys_package display_value="VTHacks 2025" source="x_1299583_vthack_0">809ff0b483103210d4ea91d6feaad363</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="VTHacks 2025">809ff0b483103210d4ea91d6feaad363</sys_scope>
+            <sys_update_name>sys_choice_x_1299583_vthack_0_amenity_amenity_type</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Pool</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>pool</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Gym</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>gym</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Roof Deck</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>roof_deck</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Concierge</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>concierge</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Package Lockers</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>package_lockers</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>EV Chargers</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>ev_chargers</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Business Center</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>business_center</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Pets Allowed</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>pets_allowed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>In Unit WD</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>8</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>in_unit_wd</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Balcony</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>9</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>balcony</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Doorman</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>doorman</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Storage</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>11</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>storage</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Bike Room</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>12</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>bike_room</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Playground</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>13</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>playground</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Courtyard</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>14</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>courtyard</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Grilling Area</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>15</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>grilling_area</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Co Working</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>16</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>co_working</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>amenity_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Theater</label>
+            <language>en</language>
+            <name>x_1299583_vthack_0_amenity</name>
+            <sequence>17</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-09-28 05:37:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-09-28 05:37:02</sys_updated_on>
+            <value>theater</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

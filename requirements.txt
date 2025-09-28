@@ -6,7 +6,6 @@ numpy
 plotly
 statsmodels
 prophet
-pmdarima
 pydantic
 python-dotenv
 reportlab

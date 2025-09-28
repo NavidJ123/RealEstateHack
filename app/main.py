@@ -103,17 +103,117 @@ def render_listing_page() -> None:
     backend = get_backend_client()
 
     submarket_filter = st.text_input("Filter by submarket or ZIP", "").strip()
-    limit = st.slider("Max listings", min_value=10, max_value=200, value=30, step=10)
-    properties = backend.list_properties(submarket=submarket_filter or None, limit=limit)
+    max_results = st.slider("Max listings", min_value=10, max_value=200, value=30, step=10)
+
+    fetch_limit = 200
+    properties = backend.list_properties(submarket=submarket_filter or None, limit=fetch_limit)
 
     if not properties:
         st.warning("No properties available for the selected filter.")
         st.markdown(DISCLAIMER_HTML, unsafe_allow_html=True)
         return
 
-    summaries = property_summaries(backend, properties)
+    def safe_float(value: object) -> Optional[float]:
+        try:
+            if value is None:
+                return None
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
+    price_values = [val for prop in properties if (val := safe_float(prop.get("current_est_value"))) is not None]
+    sqft_values = [val for prop in properties if (val := safe_float(prop.get("sqft"))) is not None]
+    unit_values = [val for prop in properties if (val := safe_float(prop.get("num_units"))) is not None]
+
+    price_floor = int(min(price_values)) if price_values else 0
+    price_ceiling = int(max(price_values)) if price_values else 5_000_000
+    if price_floor == price_ceiling:
+        price_ceiling = price_floor + 100_000
+
+    sqft_floor = int(min(sqft_values)) if sqft_values else 0
+    sqft_ceiling = int(max(sqft_values)) if sqft_values else 5_000
+    if sqft_floor == sqft_ceiling:
+        sqft_ceiling = sqft_floor + 100
+
+    unit_floor = int(min(unit_values)) if unit_values else 0
+    unit_ceiling = int(max(unit_values)) if unit_values else 100
+    if unit_floor == unit_ceiling:
+        unit_ceiling = unit_floor + 5
+
+    filter_col1, filter_col2 = st.columns(2)
+    price_min, price_max = filter_col1.slider(
+        "Price range ($)",
+        min_value=price_floor,
+        max_value=price_ceiling,
+        value=(price_floor, price_ceiling),
+        step=10_000,
+    )
+    zip_options = sorted({str(prop.get("zipcode") or "").strip() for prop in properties if prop.get("zipcode")})
+    selected_zips = filter_col2.multiselect("ZIP code", options=zip_options, default=[])
+
+    filter_col3, filter_col4 = st.columns(2)
+    sqft_min, sqft_max = filter_col3.slider(
+        "Square footage",
+        min_value=sqft_floor,
+        max_value=sqft_ceiling,
+        value=(sqft_floor, sqft_ceiling),
+        step=50,
+    )
+    units_min, units_max = filter_col4.slider(
+        "Unit count",
+        min_value=unit_floor,
+        max_value=unit_ceiling,
+        value=(unit_floor, unit_ceiling),
+        step=1,
+    )
+
+    def within_range(value: object, lower: float, upper: float) -> bool:
+        coerced = safe_float(value)
+        if coerced is None:
+            return False
+        return lower <= coerced <= upper
+
+    price_active = price_min > price_floor or price_max < price_ceiling
+    sqft_active = sqft_min > sqft_floor or sqft_max < sqft_ceiling
+    units_active = units_min > unit_floor or units_max < unit_ceiling
+
+    filtered = []
+    for prop in properties:
+        price = prop.get("current_est_value")
+        sqft = prop.get("sqft")
+        units = prop.get("num_units")
+        zipcode = str(prop.get("zipcode") or "").strip()
+
+        if price is None:
+            if price_active:
+                continue
+        elif not within_range(price, price_min, price_max):
+            continue
+
+        if sqft is None:
+            if sqft_active:
+                continue
+        elif not within_range(sqft, sqft_min, sqft_max):
+            continue
+
+        if units is None:
+            if units_active:
+                continue
+        elif not within_range(units, units_min, units_max):
+            continue
+        if selected_zips and zipcode not in selected_zips:
+            continue
+        filtered.append(prop)
+
+    if not filtered:
+        st.info("No properties match the selected filters. Try widening the ranges.")
+        st.markdown(DISCLAIMER_HTML, unsafe_allow_html=True)
+        return
+
+    limited_properties = filtered[:max_results]
+    summaries = property_summaries(backend, limited_properties)
     columns = st.columns(3)
-    for idx, prop in enumerate(properties):
+    for idx, prop in enumerate(limited_properties):
         summary = summaries[prop["id"]]
         with columns[idx % 3]:
             render_property_card(

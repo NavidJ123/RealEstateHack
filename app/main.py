@@ -112,7 +112,7 @@ def render_explain_panel(explanations: Dict, scoring: Dict) -> None:
 
 
 def render_listing_page() -> None:
-    st.title("AI Real Estate Broker · Washington, DC")
+    st.title("AI Real Estate Broker · Gotham, VA")
     backend = get_backend_client()
 
     max_results = st.slider("Max listings", min_value=10, max_value=200, value=30, step=10)

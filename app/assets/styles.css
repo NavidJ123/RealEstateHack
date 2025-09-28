@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 .property-card h3 {
     font-size: 1.1rem;
     margin: 0.5rem 0 0.4rem 0;
-    color: #ffffff !important;
+    color: #000000 !important;
 }
 
 .property-card__meta {

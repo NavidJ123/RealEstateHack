@@ -113,8 +113,7 @@ class PDFService:
         c.setFillColor(colors.black)
         row_height = 12
         y = top - 30
-        for idx, (label, value) in enumerate(rows):
-            self._draw_row_stripe(c, idx, margin, width, y, row_height, x_padding=6)
+        for label, value in rows:
             c.drawString(margin + 6, y, label)
             c.drawRightString(width - margin - 6, y, value)
             y -= row_height
@@ -218,12 +217,11 @@ class PDFService:
             c.drawString(margin, y, "No comparable sales available.")
             return y - 10
         row_height = 12
-        for idx, comp in enumerate(comps):
+        for comp in comps:
             row = (
                 f"{comp.address} · {comp.sale_date} · {self._fmt_currency(comp.sale_price)} · "
                 f"{self._fmt_number(comp.sqft, suffix=' sqft')}"
             )
-            self._draw_row_stripe(c, idx, margin, width, y, row_height, x_padding=6)
             c.drawString(margin + 6, y, row)
             y -= row_height
         return y
@@ -244,37 +242,12 @@ class PDFService:
         c.setFillColor(colors.black)
         row_height = 12
         y = top - 30
-        for idx, factor in enumerate(factors):
+        for factor in factors:
             effect = "+" if factor.contrib >= 0 else "-"
             label = f"{factor.name}: {effect}{abs(factor.contrib):.1f} pts (weight {factor.weight:.2f})"
-            self._draw_row_stripe(c, idx, margin, width, y, row_height, x_padding=6)
             c.drawString(margin + 6, y, label)
             y -= row_height
         return y
-
-    def _draw_row_stripe(
-        self,
-        c: canvas.Canvas,
-        row_index: int,
-        margin: float,
-        width: float,
-        baseline: float,
-        row_height: float,
-        *,
-        x_padding: float = 0.0,
-        y_padding: float = 2.0,
-    ) -> None:
-        """Shade every other row to create alternating horizontal stripes."""
-        if row_index % 2 != 0:
-            return
-        stripe_y = baseline - row_height + y_padding
-        stripe_width = width - 2 * margin - 2 * x_padding
-        if stripe_width <= 0:
-            return
-        c.saveState()
-        c.setFillColor(colors.HexColor("#F2F4F7"))
-        c.rect(margin + x_padding, stripe_y, stripe_width, row_height, stroke=0, fill=1)
-        c.restoreState()
 
     def _draw_risks(self, c: canvas.Canvas, analysis: AnalysisResponse, top: float, margin: float) -> None:
         c.setFont("Helvetica-Bold", 12)

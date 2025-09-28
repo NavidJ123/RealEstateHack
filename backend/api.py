@@ -1,5 +1,9 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Query
-from typing import Optional, Union
+from fastapi import FastAPI, APIRouter, HTTPException, Query, Response
+from fastapi.encoders import jsonable_encoder
+from typing import Any, Optional, Union
+app = FastAPI()
+router = APIRouter(prefix="/api")
+import math
 
 try:
     from dotenv import load_dotenv
@@ -11,23 +15,50 @@ if load_dotenv is not None:
 
     load_dotenv(dotenv_path=Path(__file__).resolve().parents[1] / ".env", override=False)
 
+
+
+
+def _sanitize(value: Any) -> Any:
+    if isinstance(value, float) and math.isnan(value):
+        return None
+    if isinstance(value, dict):
+        return {k: _sanitize(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_sanitize(item) for item in value]
+    return value
+
 from .services.analysis_service import analyze_property
 from .db.repo import Repo
 from .services.broker_llm import BrokerLLM
+from .services.pdf_service import PDFService
+from .models.analysis import AnalysisResponse
 
 app = FastAPI()
 router = APIRouter(prefix="/api")
 repo = Repo()
 llm  = BrokerLLM()
+pdf_service = PDFService()
 
 @router.get("/properties")
 def list_props(submarket: Optional[str] = Query(None), limit: int = Query(200, ge=1, le=500)):
     rows = repo.list_properties(submarket=submarket, limit=limit)
-    return rows
+    payload = {"items": [_sanitize(row) for row in rows], "total": len(rows)}
+    return jsonable_encoder(payload)
 
 @router.get("/properties/{sys_id}")
 def get_prop(sys_id: str):
-    return analyze_property(sys_id)
+    analysis = analyze_property(sys_id)
+    return jsonable_encoder(_sanitize(analysis.dict()))
+
+
+@router.post("/export/{sys_id}")
+def export_property(sys_id: str):
+    analysis = analyze_property(sys_id)
+    sanitized = _sanitize(analysis.dict())
+    score_payload = llm.score_and_explain(sanitized)
+    analysis_model = AnalysisResponse.parse_obj(sanitized)
+    pdf_bytes = pdf_service.render(analysis_model, score_payload)  # pragma: no cover
+    return Response(content=pdf_bytes, media_type="application/pdf")
 
 from pydantic import BaseModel
 class BrokerReq(BaseModel):
@@ -47,5 +78,17 @@ def broker_route(req: BrokerReq):
 
 @router.get("/health")
 def health(): return {"status":"ok"}
+
+@router.get("/llm_probe")
+def llm_probe():
+    from .services.broker_llm import BrokerLLM
+    b = BrokerLLM()
+    if not b._model:
+        return {"ok": False, "why": "no_model"}
+    try:
+        t = b._model.generate_content("ping").text
+        return {"ok": True, "model": b.model_name, "sample": (t or "")[:40]}
+    except Exception as e:
+        return {"ok": False, "model": b.model_name, "error": str(e)}
 
 app.include_router(router)

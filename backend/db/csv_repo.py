@@ -52,11 +52,17 @@ class CSVRepository:
         if limit is not None:
             df = df.head(limit)
         df = df.where(pd.notnull(df), None)
-        records = df.to_dict("records")
-        # Convert zipcode to string
-        for record in records:
+        records = []
+        for raw in df.to_dict("records"):
+            record = {}
+            for key, value in raw.items():
+                if isinstance(value, float) and math.isnan(value):
+                    record[key] = None
+                else:
+                    record[key] = value
             if record.get("zipcode") is not None:
                 record["zipcode"] = str(record["zipcode"]).strip()
+            records.append(record)
         return records
 
     def get_property(self, property_id: str) -> Optional[Dict]:

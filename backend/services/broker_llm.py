@@ -47,19 +47,34 @@ Use ONLY the provided JSON analysis and scoring summary. Do not fabricate number
 
 
 class BrokerLLM:
+    # in broker_llm.py
+    # broker_llm.py
     def __init__(self, model: Optional[str] = None) -> None:
         self.api_key = os.getenv("GOOGLE_API_KEY")
-        self.model_name = model or os.getenv("LLM_MODEL", "gemini-1.5-flash-002")
+        preferred = model or os.getenv("LLM_MODEL") or "gemini-2.5-flash"
+        # normalize: strip 'models/' prefix if present
+        self.model_name = preferred.split("/", 1)[-1] if preferred.startswith("models/") else preferred
         self._model = None
         if self.api_key and genai is not None:
             try:
                 genai.configure(api_key=self.api_key)
-                self._model = genai.GenerativeModel(self.model_name)
-            except Exception as exc:  # pragma: no cover - optional dependency
+                try:
+                    self._model = genai.GenerativeModel(self.model_name)
+                except Exception:
+                    # auto-pick a supported 2.x model
+                    avail = [m for m in genai.list_models()
+                            if "generateContent" in getattr(m, "supported_generation_methods", [])]
+                    names = [getattr(m, "name", "") for m in avail]
+                    for cand in ("models/gemini-2.5-flash","models/gemini-2.5-pro","gemini-2.5-flash","gemini-2.5-pro"):
+                        if cand in names or cand.replace("models/","") in names:
+                            self.model_name = cand.replace("models/","")
+                            self._model = genai.GenerativeModel(self.model_name)
+                            break
+            except Exception as exc:
                 LOGGER.warning("Failed to initialise Gemini client: %s", exc)
                 self._model = None
-        elif self.api_key and genai is None:
-            LOGGER.warning("google-generativeai not installed; falling back to deterministic scoring")
+
+
 
     def score_and_explain(self, analysis: AnalysisResponse | Dict[str, Any]) -> Dict[str, Any]:
         payload = self._ensure_dict(analysis)

@@ -23,6 +23,7 @@ def render_chat(property_id: str, analysis: Dict, backend_client, show_header: b
     prompt = st.chat_input("Ask the AI Broker about this property", key=input_key)
     if prompt:
         history.append({"role": "user", "content": prompt})
+        print(prompt)
         with st.chat_message("user"):
             st.markdown(prompt)
         reply = backend_client.ask_broker(property_id, analysis, prompt)
